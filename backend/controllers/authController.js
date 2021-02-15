@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 // Signup api
 module.exports.signup = async (req, res) => {
@@ -15,4 +16,23 @@ module.exports.signup = async (req, res) => {
 };
 
 // Login api
-module.exports.login = (req, res) => {};
+module.exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      const isValid = await bcrypt.compare(password, user.password);
+
+      if (!isValid) {
+        res.status(404).json({ err: "Invalid credentials" });
+      }
+
+      res.status(200).json({ user });
+    } else {
+      res.status(404).json({ err: "Invalid credentials" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
