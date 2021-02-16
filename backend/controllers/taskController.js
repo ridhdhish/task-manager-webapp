@@ -1,6 +1,4 @@
 const Task = require("../models/Task");
-const jwt = require("jsonwebtoken");
-const { getToken } = require("../utils/getAuthorizationToken");
 
 /*
     route: POST /task/create
@@ -10,11 +8,9 @@ module.exports.createTask = async (req, res) => {
   const { title, description, dueDate } = req.body;
 
   try {
-    const authHeader = req.get("Authorization");
-    const token = authHeader.split(" ")[1];
-    const decodedToken = jwt.verify(token, process.env.SECRETE_KEY);
-
+    const decodedToken = getToken(req);
     const userId = decodedToken.id;
+
     const task = await Task.create({ title, description, dueDate, userId });
     res.status(200).json({ task });
   } catch (err) {
