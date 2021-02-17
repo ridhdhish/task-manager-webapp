@@ -1,6 +1,7 @@
 const { findById } = require("../models/User");
 const User = require("../models/User");
 const { getToken } = require("../utils/getAuthorizationToken");
+const { sendResponse } = require("../utils/sendResponse");
 
 /*
     route: PUT /user
@@ -14,7 +15,7 @@ module.exports.updateUser = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(500).json({ message: "Unable to update user" });
+      return sendResponse(res, "Unable to update user", 404);
     }
 
     const { email, username } = req.body;
@@ -27,6 +28,7 @@ module.exports.updateUser = async (req, res) => {
     res.status(200).json({ user });
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };
 
@@ -42,7 +44,7 @@ module.exports.deleteUser = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(500).json({ message: "Unable to update user" });
+      return sendResponse(res, "Unable to delete user", 404);
     }
 
     await User.findByIdAndDelete(userId);
@@ -50,6 +52,7 @@ module.exports.deleteUser = async (req, res) => {
     res.status(200).json({ message: "User deleted successfully" });
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };
 
@@ -65,11 +68,12 @@ module.exports.getUser = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(500).json({ message: "No user found" });
+      return sendResponse(res, "Unable to fetch user", 404);
     }
 
     res.status(200).json({ user });
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };

@@ -11,10 +11,10 @@ module.exports.signup = async (req, res) => {
   try {
     const user = await User.create({ email, password, username });
     const token = generateToken(user._id);
-    console.log(user);
     res.status(200).json({ user, token });
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };
 
@@ -28,15 +28,16 @@ module.exports.login = async (req, res) => {
       const isValid = await bcrypt.compare(password, user.password);
 
       if (!isValid) {
-        res.status(404).json({ err: "Invalid credentials" });
+        return sendResponse(res, "Invalid Credentials", 404);
       }
 
       const token = generateToken(user._id);
       res.status(200).json({ user, token });
     } else {
-      res.status(404).json({ err: "Invalid credentials" });
+      return sendResponse(res, "Invalid Credentials", 404);
     }
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };

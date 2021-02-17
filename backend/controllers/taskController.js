@@ -15,6 +15,7 @@ module.exports.createTask = async (req, res) => {
     res.status(200).json({ task });
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };
 
@@ -32,6 +33,7 @@ module.exports.getAllTask = async (req, res) => {
     res.status(200).json({ tasks });
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };
 
@@ -49,6 +51,7 @@ module.exports.getTask = async (req, res) => {
     res.status(200).json({ task });
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };
 
@@ -63,7 +66,7 @@ module.exports.updateTask = async (req, res) => {
     const task = await Task.findOne({ userId, _id: req.params.id });
 
     if (!task) {
-      return res.status(404).json({ err: "Unable to find task" });
+      return sendResponse(res, "Unable to update task", 404);
     }
 
     const { title, description, dueDate } = req.body;
@@ -77,6 +80,7 @@ module.exports.updateTask = async (req, res) => {
     res.status(200).json({ task });
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };
 
@@ -91,7 +95,7 @@ module.exports.deleteAllTask = async (req, res) => {
 
     const tasks = await Task.find({ userId });
     if (!tasks) {
-      return res.status(404).json({ err: "Unable to delete all tasks" });
+      return sendResponse(res, "Unable to delete all tasks", 404);
     }
 
     await Task.deleteMany({ userId });
@@ -99,6 +103,7 @@ module.exports.deleteAllTask = async (req, res) => {
     res.status(200).json({ tasks: "All tasks are deleted" });
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };
 
@@ -113,7 +118,7 @@ module.exports.deleteTask = async (req, res) => {
 
     const tasks = await Task.find({ userId, _id: req.params.id });
     if (!tasks) {
-      return res.status(404).json({ err: "Unable to delete a task" });
+      return sendResponse(res, "Unable to delete a task", 404);
     }
 
     await Task.deleteOne({ userId, _id: req.params.id });
@@ -121,5 +126,6 @@ module.exports.deleteTask = async (req, res) => {
     res.status(200).json({ task: "Selected task is deleted" });
   } catch (err) {
     console.log(err);
+    return sendResponse(res, "Internal server error");
   }
 };
