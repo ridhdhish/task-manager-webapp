@@ -8,8 +8,8 @@ import { faEnvelopeOpen, faLock } from "@fortawesome/free-solid-svg-icons";
 
 const login = (props) => {
   return (
-    <div style={{ width: "100%", height: "100%" }}>
-      <BackSvg />
+    <div className="login-container">
+      <BackSvg /> 
       <div className={styles.App}>
         <div className={styles.Container}>
           <h1>Welcome back!</h1>

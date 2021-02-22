@@ -8,13 +8,14 @@ const backSvg = () => {
         height: "100%",
         width: "100%",
         paddingTop: 130,
+        
       }}
     >
       <svg
         height="100%"
-        width="100%"
+        width="130%"
         id="bg-svg"
-        viewBox="0 0 1440 700"
+        viewBox="0 0 1640 600"
         xmlns="http://www.w3.org/2000/svg"
         class="transition duration-300 ease-in-out delay-150"
       >
