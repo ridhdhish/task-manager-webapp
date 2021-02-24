@@ -12,13 +12,26 @@
   background: white;
 }
 
+.App p {
+  position: absolute;
+  margin-top: 40px;
+  margin-left: 55px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: white;
+  text-transform: uppercase;
+}
+
 .Container {
-  padding-top: 20px;
-  text-align: center;
-  height: 23rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 25rem;
   width: 30rem;
   border-radius: 6px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 1px -5px 30px 1px rgba(0, 0, 0, 0.2);
 }
 
 input {
@@ -26,10 +39,7 @@ input {
   height: 2.2rem;
   border: 0px solid;
   padding-left: 15px;
-}
-
-input:active {
-  border-width: 0px;
+  outline: none;
 }
 
 .Input {
@@ -38,7 +48,7 @@ input:active {
   border-radius: 3px;
   border: 1px solid;
   border-color: #e9e1e1;
-  margin-top: 7px;
+  margin-top: 10px;
   padding-left: 10px;
 }
 
@@ -55,7 +65,7 @@ label {
 }
 
 button {
-  margin-top: 25px;
+  margin-top: 35px;
   width: 23.7rem;
   height: 3rem;
   border: 0px;
@@ -63,11 +73,64 @@ button {
   background: #7b68ee;
   color: white;
   font-weight: bold;
+  font-size: 1rem;
 }
 
 h1 {
   color: #292d34;
   font-size: 36px;
   font-weight: 800;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  padding: 1.8rem 0rem;
+}
+
+.navHeader {
+  display: flex;
+  margin-left: 2.5rem;
+}
+
+.navHeader p {
+  font-weight: 900;
+  font-size: 1.9rem;
+  margin-left: 3rem;
+}
+
+.navHeader img {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: 0;
+  margin-top: 2.45rem;
+  margin-left: 5px;
+}
+
+.navLink {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 1rem;
+  margin-top: 10px;
+}
+
+.navLink p {
+  margin-right: 1.3rem;
+  margin-top: 10px;
+  color: #757272;
+}
+
+.navLink a {
+  font-weight: 700;
+  text-decoration: none;
+  color: #7b68ee;
+  border: 1px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px 30px;
+  margin-right: 20px;
 }
