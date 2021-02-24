@@ -16,8 +16,8 @@ const login = (props) => {
           <p>Slick</p>
         </div>
         <div className={styles.navLink}>
-          <p>Already have an account?</p>
-          <a href="#Login">Login</a>
+          <p>Don't you have account?</p>
+          <a href="#Login">Signup</a>
         </div>
       </div>
       <img src={BackSvg} alt="wave" />
@@ -54,6 +54,9 @@ const login = (props) => {
             </div>
             <button>Log In</button>
           </form>
+          <a href="#" style={{ marginTop: 10 }}>
+            Forgot password?
+          </a>
         </div>
         <p>let's make the world more productive, together</p>
       </div>

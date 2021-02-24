@@ -32,6 +32,7 @@
   width: 30rem;
   border-radius: 6px;
   box-shadow: 1px -5px 30px 1px rgba(0, 0, 0, 0.2);
+  padding-top: 8px;
 }
 
 input {
@@ -81,13 +82,12 @@ h1 {
   font-size: 36px;
   font-weight: 800;
   letter-spacing: 1px;
-  margin-bottom: 10px;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  padding: 1.8rem 0rem;
+  padding: 0.3rem 0rem;
 }
 
 .navHeader {
@@ -131,6 +131,6 @@ h1 {
   border: 1px;
   border-radius: 4px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 10px 30px;
+  padding: 12px 30px;
   margin-right: 20px;
 }
