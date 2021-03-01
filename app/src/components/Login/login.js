@@ -9,7 +9,7 @@ import { faEnvelopeOpen, faLock } from "@fortawesome/free-solid-svg-icons";
 
 const login = (props) => {
   return (
-    <div>
+    <div style={{ overflowY: "hidden", height: "100vh" }}>
       <div className={styles.nav}>
         <div className={styles.navHeader}>
           <img src={Logo} alt="Logo" />
@@ -54,7 +54,7 @@ const login = (props) => {
             </div>
             <button>Log In</button>
           </form>
-          <a href="#" style={{ marginTop: 10 }}>
+          <a href="#home" style={{ marginTop: 10 }}>
             Forgot password?
           </a>
         </div>
