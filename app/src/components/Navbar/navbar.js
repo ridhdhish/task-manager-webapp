@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./navbar.module.css";
-import { IoHome, IoList } from "react-icons/io5";
-import { FaUser } from "react-icons/fa";
+import { IoHomeOutline, IoList } from "react-icons/io5";
 import { MdTimeline, MdDashboard, MdAdd } from "react-icons/md";
+
+import user from "../../assets/user2.png";
 
 const navbar = () => {
   return (
@@ -15,7 +16,7 @@ const navbar = () => {
           </div>
           <div className={styles.headerLink}>
             <a className={styles.active} href="#dashboard">
-              <IoHome color="#ec5858" size="1.2rem" />
+              <IoHomeOutline color="#ec5858" size="1.2rem" />
             </a>
             <a href="#dashboard">
               <IoList color="white" size="1.5rem" />
@@ -46,9 +47,19 @@ const navbar = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              cursor: "pointer",
             }}
           >
-            <FaUser size="1.5rem" color="green" />
+            <img
+              style={{
+                height: 40,
+                width: 50,
+                objectFit: "cover",
+                backgroundColor: "#27292a",
+              }}
+              src={user}
+              alt="user"
+            />
           </div>
         </div>
       </div>
