@@ -4,6 +4,8 @@ import styles from "./login.module.css";
 import BackSvg from "../../utils/wave.svg";
 import Logo from "../../utils/logo.png";
 
+import { Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faLock } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,7 +19,7 @@ const login = (props) => {
         </div>
         <div className={styles.navLink}>
           <p>Don't you have account?</p>
-          <a href="#Login">Signup</a>
+          <Link to="/signup">Signup</Link>
         </div>
       </div>
       <img src={BackSvg} alt="wave" />
@@ -52,9 +54,9 @@ const login = (props) => {
                 />
               </div>
             </div>
-            <button>Log In</button>
           </form>
-          <a href="#home" style={{ marginTop: 10 }}>
+          <button className={styles.button}>Log In</button>
+          <a href="#home" style={{ marginTop: 0 }}>
             Forgot password?
           </a>
         </div>

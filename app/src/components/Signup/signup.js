@@ -4,12 +4,14 @@ import styles from "./signup.module.css";
 import BackSvg from "../../utils/wave.svg";
 import Logo from "../../utils/logo.png";
 
+import { Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faLock } from "@fortawesome/free-solid-svg-icons";
 
 const signup = (props) => {
   return (
-    <div>
+    <div style={{ overflowY: "hidden", height: "100vh" }}>
       <div className={styles.nav}>
         <div className={styles.navHeader}>
           <img src={Logo} alt="Logo" />
@@ -17,7 +19,7 @@ const signup = (props) => {
         </div>
         <div className={styles.navLink}>
           <p>Already have an account?</p>
-          <a href="#Login">Login</a>
+          <Link to="/login">Login</Link>
         </div>
       </div>
       <img src={BackSvg} alt="wave" />
@@ -52,8 +54,8 @@ const signup = (props) => {
                 />
               </div>
             </div>
-            <button>Signup</button>
           </form>
+          <button className={styles.button}>Signup</button>
         </div>
         <p>let's make the world more productive, together</p>
       </div>
