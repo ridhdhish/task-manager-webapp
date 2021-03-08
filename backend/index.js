@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const userRoutes = require("./routes/userRoutes");
+const projectRoutes = require("./routes/projectRoutes");
+const inviteRoutes = require("./routes/inviteRoutes");
 
 const app = express();
 
@@ -32,4 +34,6 @@ module.exports = mongoose
 app.use("/api", authRoutes);
 app.use("/api", taskRoutes);
 app.use("/api", userRoutes);
+app.use("/api", projectRoutes);
+app.use("/api", inviteRoutes);
 app.get("/", (req, res) => res.send("Hello"));

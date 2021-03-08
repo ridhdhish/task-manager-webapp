@@ -1,4 +1,139 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
+* {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .container {
   background-color: #eaeaea;
   width: 100%;
+  overflow: hidden;
+  display: flex;
+}
+
+.navbar {
+  margin-right: 2rem;
+}
+
+.main {
+  width: 100%;
+}
+
+.main h1 {
+  margin-top: 2.4rem;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  color: rgb(97, 96, 96);
+}
+
+.main span {
+  color: rgb(56, 53, 53);
+}
+
+.main .separator {
+  border-bottom: 0.5px solid rgb(207, 203, 203);
+  width: 100%;
+}
+
+.recentSection {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.recentSection h2 {
+  color: #2f3539;
+}
+
+.card {
+  width: 10rem;
+  height: 6rem;
+  display: flex;
+  margin-top: 1.6rem;
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+}
+
+.card .logo {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: #2c3135;
+}
+
+.card .logo p {
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.cardContent {
+  margin-left: 1rem;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.cardContent span {
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.user {
+  width: 22px;
+  height: 22px;
+  margin-top: 0.5rem;
+  margin-right: 0.3rem;
+  background-color: blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+}
+
+.user p {
+  color: white;
+  font-size: 0.55rem;
+  font-weight: 700;
+}
+
+.prioritySection {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.pCard {
+  width: 18rem;
+  height: 10rem;
+  margin-top: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  background-color: #5e53dd;
+  color: white;
+}
+
+.pCard h2 {
+  color: #2f3539;
+}
+
+.pCard .pTitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.pContent {
 }

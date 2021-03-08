@@ -53,6 +53,8 @@ button {
   margin-bottom: 20px;
   background-color: #3862df;
   cursor: pointer;
+  border: none;
+  border-radius: 3px;
 }
 
 .navLower {
