@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Username field is required"],
   },
+  projects: {
+    type: [],
+    default: [],
+  },
 });
 
 // Encrypt password before creating new user

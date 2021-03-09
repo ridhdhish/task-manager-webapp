@@ -1,5 +1,6 @@
 const Project = require("../models/Project");
 const Invite = require("../models/Invite");
+const User = require("../models/User");
 const { findOne } = require("../models/Invite");
 
 /*
@@ -7,8 +8,14 @@ const { findOne } = require("../models/Invite");
     description: Create new project
 */
 module.exports.createProject = async (req, res) => {
+  const { title, description, dueDate } = req.body;
   try {
-    const project = await Project.create(req.body);
+    const project = await Project.create({
+      title,
+      description,
+      dueDate,
+      creator: req.user._id,
+    });
     res.status(200).json({ project });
   } catch (err) {
     console.log(err);
@@ -20,11 +27,16 @@ module.exports.createProject = async (req, res) => {
     description: Add members to the project
 */
 module.exports.addMember = async (req, res) => {
-  const { id, username, email } = req.body;
+  const { id, username, email, userId } = req.body;
   try {
-    const project = await Project.findOne({ _id: id });
+    const project = await Project.findById(id);
     project.members.push({ username, email });
     project.save();
+
+    const user = await User.findById(userId);
+    user.projects.push(id);
+    user.save();
+
     res.status(200).json({ project });
   } catch (err) {
     console.log(err);
@@ -42,3 +54,25 @@ module.exports.deleteProject = async (req, res) => {};
     description: Delete all projects
 */
 module.exports.deleteAllProject = async (req, res) => {};
+
+/*
+    Route: GET /project/getAllProject
+    Description: Fetch all projects in which user is involved
+*/
+module.exports.getAllProject = async (req, res) => {
+  const { projects } = req.body;
+  const allProjects = [];
+  try {
+    await Promise.all(
+      projects.map(async (id) => {
+        const project = await Project.findById(id);
+        console.log(project);
+        allProjects.push(project);
+      })
+    );
+    console.log("hello");
+    res.status(200).json({ allProjects });
+  } catch (err) {
+    console.log(err);
+  }
+};

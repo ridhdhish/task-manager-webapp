@@ -10,7 +10,7 @@ module.exports.signup = async (req, res) => {
 
   try {
     const user = await User.create({ email, password, username });
-    const token = generateToken(user._id);
+    const token = generateToken(user);
     res.status(200).json({ user, token });
   } catch (err) {
     console.log(err);
@@ -31,7 +31,7 @@ module.exports.login = async (req, res) => {
         return sendResponse(res, "Invalid Credentials", 404);
       }
 
-      const token = generateToken(user._id);
+      const token = generateToken(user);
       res.status(200).json({ user, token });
     } else {
       return sendResponse(res, "Invalid Credentials", 404);
