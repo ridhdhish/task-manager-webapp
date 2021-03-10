@@ -1,7 +1,10 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const utils = require("../utils/sendResponse");
 
 const { generateToken } = require("../utils/createToken");
+
+const sendResponse = utils.sendResponse;
 
 // Signup api
 module.exports.signup = async (req, res) => {
@@ -23,7 +26,6 @@ module.exports.login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-
     if (user) {
       const isValid = await bcrypt.compare(password, user.password);
 

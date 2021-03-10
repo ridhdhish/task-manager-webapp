@@ -1,6 +1,5 @@
 const { findById } = require("../models/User");
 const User = require("../models/User");
-const { getToken } = require("../utils/getAuthorizationToken");
 const { sendResponse } = require("../utils/sendResponse");
 
 /*
@@ -9,8 +8,7 @@ const { sendResponse } = require("../utils/sendResponse");
 */
 module.exports.updateUser = async (req, res) => {
   try {
-    const decodedToken = getToken(req);
-    const userId = decodedToken.id;
+    const userId = req.user._id;
 
     const user = await User.findById(userId);
 
@@ -38,8 +36,7 @@ module.exports.updateUser = async (req, res) => {
 */
 module.exports.deleteUser = async (req, res) => {
   try {
-    const decodedToken = getToken(req);
-    const userId = decodedToken.id;
+    const userId = req.user._id;
 
     const user = await User.findById(userId);
 
@@ -62,8 +59,7 @@ module.exports.deleteUser = async (req, res) => {
 */
 module.exports.getUser = async (req, res) => {
   try {
-    const decodedToken = getToken(req);
-    const userId = decodedToken.id;
+    const userId = req.user._id;
 
     const user = await User.findById(userId);
 

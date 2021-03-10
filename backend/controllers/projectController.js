@@ -9,11 +9,14 @@ const { findOne } = require("../models/Invite");
 */
 module.exports.createProject = async (req, res) => {
   const { title, description, dueDate } = req.body;
+  const date = new Date(dueDate);
+  console.log(date);
+
   try {
     const project = await Project.create({
       title,
       description,
-      dueDate,
+      dueDate: date,
       creator: req.user._id,
     });
     res.status(200).json({ project });
@@ -27,17 +30,27 @@ module.exports.createProject = async (req, res) => {
     description: Add members to the project
 */
 module.exports.addMember = async (req, res) => {
-  const { id, username, email, userId } = req.body;
+  const { id, inviteId } = req.body;
+  const { email, username } = req.user;
+
   try {
     const project = await Project.findById(id);
-    project.members.push({ username, email });
-    project.save();
+    console.log(project.members.includes({ username, email }));
 
-    const user = await User.findById(userId);
-    user.projects.push(id);
-    user.save();
+    if (project.members.includes({ username, email })) {
+      project.members.push({ username, email });
+      project.save();
 
-    res.status(200).json({ project });
+      const user = await User.findOne({ email });
+      user.projects.push(id);
+      user.save();
+
+      await Invite.findByIdAndDelete(inviteId);
+
+      return res.status(200).json({ project, user });
+    }
+
+    res.status(401).json({ message: "User already exists!" });
   } catch (err) {
     console.log(err);
   }
@@ -60,17 +73,16 @@ module.exports.deleteAllProject = async (req, res) => {};
     Description: Fetch all projects in which user is involved
 */
 module.exports.getAllProject = async (req, res) => {
-  const { projects } = req.body;
-  const allProjects = [];
   try {
+    const { projects } = await User.findById(req.user._id);
+    const allProjects = [];
+
     await Promise.all(
       projects.map(async (id) => {
         const project = await Project.findById(id);
-        console.log(project);
         allProjects.push(project);
       })
     );
-    console.log("hello");
     res.status(200).json({ allProjects });
   } catch (err) {
     console.log(err);

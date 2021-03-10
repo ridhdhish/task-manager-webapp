@@ -8,8 +8,7 @@ module.exports.createTask = async (req, res) => {
   const { title, description, dueDate } = req.body;
 
   try {
-    const decodedToken = getToken(req);
-    const userId = decodedToken.id;
+    const userId = req.user._id;
 
     const task = await Task.create({ title, description, dueDate, userId });
     res.status(200).json({ task });
@@ -25,8 +24,7 @@ module.exports.createTask = async (req, res) => {
 */
 module.exports.getAllTask = async (req, res) => {
   try {
-    const decodedToken = getToken(req);
-    const userId = decodedToken.id;
+    const userId = req.user._id;
 
     const tasks = await Task.find({ userId });
 
@@ -43,8 +41,7 @@ module.exports.getAllTask = async (req, res) => {
 */
 module.exports.getTask = async (req, res) => {
   try {
-    const decodedToken = getToken(req);
-    const userId = decodedToken.id;
+    const userId = req.user._id;
 
     const task = await Task.findOne({ userId, _id: req.params.id });
 
@@ -61,8 +58,8 @@ module.exports.getTask = async (req, res) => {
 */
 module.exports.updateTask = async (req, res) => {
   try {
-    const decodedToken = getToken(req);
-    const userId = decodedToken.id;
+    const userId = req.user._id;
+
     const task = await Task.findOne({ userId, _id: req.params.id });
 
     if (!task) {
@@ -90,8 +87,7 @@ module.exports.updateTask = async (req, res) => {
 */
 module.exports.deleteAllTask = async (req, res) => {
   try {
-    const decodedToken = getToken(req);
-    const userId = decodedToken.id;
+    const userId = req.user._id;
 
     const tasks = await Task.find({ userId });
     if (!tasks) {
@@ -113,8 +109,7 @@ module.exports.deleteAllTask = async (req, res) => {
 */
 module.exports.deleteTask = async (req, res) => {
   try {
-    const decodedToken = getToken(req);
-    const userId = decodedToken.id;
+    const userId = req.user._id;
 
     const tasks = await Task.find({ userId, _id: req.params.id });
     if (!tasks) {
