@@ -12,10 +12,12 @@ const taskSchema = new mongoose.Schema({
   dueDate: {
     type: Date,
   },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+  email: {
+    type: String,
     required: true,
+  },
+  projectId: {
+    type: mongoose.Schema.Types.ObjectId,
   },
 });
 

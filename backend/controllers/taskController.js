@@ -5,12 +5,10 @@ const Task = require("../models/Task");
     description: Create new task
 */
 module.exports.createTask = async (req, res) => {
-  const { title, description, dueDate } = req.body;
-
+  const { dueDate } = req.body;
+  const newDueDate = new Date(dueDate);
   try {
-    const userId = req.user._id;
-
-    const task = await Task.create({ title, description, dueDate, userId });
+    const task = await Task.create({ ...req.body, dueDate: newDueDate });
     res.status(200).json({ task });
   } catch (err) {
     console.log(err);
@@ -24,9 +22,9 @@ module.exports.createTask = async (req, res) => {
 */
 module.exports.getAllTask = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const email = req.user.email;
 
-    const tasks = await Task.find({ userId });
+    const tasks = await Task.find({ email });
 
     res.status(200).json({ tasks });
   } catch (err) {
@@ -41,9 +39,9 @@ module.exports.getAllTask = async (req, res) => {
 */
 module.exports.getTask = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const email = req.user.email;
 
-    const task = await Task.findOne({ userId, _id: req.params.id });
+    const task = await Task.findOne({ email, _id: req.params.id });
 
     res.status(200).json({ task });
   } catch (err) {
@@ -58,9 +56,9 @@ module.exports.getTask = async (req, res) => {
 */
 module.exports.updateTask = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const email = req.user.email;
 
-    const task = await Task.findOne({ userId, _id: req.params.id });
+    const task = await Task.findOne({ email, _id: req.params.id });
 
     if (!task) {
       return sendResponse(res, "Unable to update task", 404);
@@ -87,14 +85,14 @@ module.exports.updateTask = async (req, res) => {
 */
 module.exports.deleteAllTask = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const email = req.user.email;
 
-    const tasks = await Task.find({ userId });
+    const tasks = await Task.find({ email });
     if (!tasks) {
       return sendResponse(res, "Unable to delete all tasks", 404);
     }
 
-    await Task.deleteMany({ userId });
+    await Task.deleteMany({ email });
 
     res.status(200).json({ tasks: "All tasks are deleted" });
   } catch (err) {
@@ -109,9 +107,9 @@ module.exports.deleteAllTask = async (req, res) => {
 */
 module.exports.deleteTask = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const email = req.user.email;
 
-    const tasks = await Task.find({ userId, _id: req.params.id });
+    const tasks = await Task.find({ email, _id: req.params.id });
     if (!tasks) {
       return sendResponse(res, "Unable to delete a task", 404);
     }
