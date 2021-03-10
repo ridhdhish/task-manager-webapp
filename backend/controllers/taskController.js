@@ -114,7 +114,7 @@ module.exports.deleteTask = async (req, res) => {
       return sendResponse(res, "Unable to delete a task", 404);
     }
 
-    await Task.deleteOne({ userId, _id: req.params.id });
+    await Task.deleteOne({ email, _id: req.params.id });
 
     res.status(200).json({ task: "Selected task is deleted" });
   } catch (err) {
