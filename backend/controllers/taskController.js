@@ -1,4 +1,5 @@
 const Task = require("../models/Task");
+const { sendResponse } = require("../utils/sendResponse");
 
 /*
     route: POST /task/create
@@ -23,8 +24,9 @@ module.exports.createTask = async (req, res) => {
 module.exports.getAllTask = async (req, res) => {
   try {
     const email = req.user.email;
+    const _id = req.user._id;
 
-    const tasks = await Task.find({ email });
+    const tasks = await Task.find({ email, _id });
 
     res.status(200).json({ tasks });
   } catch (err) {
@@ -47,6 +49,20 @@ module.exports.getTask = async (req, res) => {
   } catch (err) {
     console.log(err);
     return sendResponse(res, "Internal server error");
+  }
+};
+
+/*
+    route: GET /task/getAllTask
+    description: Fetches all task for project creator
+*/
+module.exports.getCreatorAllTask = async (req, res) => {
+  try {
+    const tasks = await Task.find({ projectId: req.body.id });
+
+    res.status(200).json({ tasks });
+  } catch (err) {
+    console.log(err);
   }
 };
 

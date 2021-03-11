@@ -79,7 +79,7 @@ module.exports.deleteProject = async (req, res) => {
         .json({ message: "Cannot delete project, something went wrong" });
     }
 
-    // delete tasks first
+    // delete tasks of project first
     await Task.deleteMany({ projectId: id });
 
     // delete project ref from user
