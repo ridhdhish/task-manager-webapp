@@ -1,6 +1,7 @@
 const Project = require("../models/Project");
 const Invite = require("../models/Invite");
 const User = require("../models/User");
+const Task = require("../models/Task");
 const { findOne } = require("../models/Invite");
 
 /*
@@ -19,6 +20,11 @@ module.exports.createProject = async (req, res) => {
       dueDate: date,
       creator: req.user._id,
     });
+
+    if (!project) {
+      return res.status(401).json({ message: "something went wrong!" });
+    }
+
     res.status(200).json({ project });
   } catch (err) {
     console.log(err);
@@ -57,10 +63,42 @@ module.exports.addMember = async (req, res) => {
 };
 
 /*
-    route: DELETE /project/:id
+    route: DELETE /project/deleteProject/:id
     description: Delete single project
 */
-module.exports.deleteProject = async (req, res) => {};
+module.exports.deleteProject = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const project = await Project.findById(id);
+    console.log(project);
+
+    if (!project) {
+      return res
+        .status(401)
+        .json({ message: "Cannot delete project, something went wrong" });
+    }
+
+    // delete tasks first
+    await Task.deleteMany({ projectId: id });
+
+    // delete project ref from user
+    project.members.forEach(async (member) => {
+      const user = await User.findOne({ email: member.email });
+      const newProjects = user.projects.filter((project) => {
+        return project !== id;
+      });
+      user.projects = newProjects;
+      await user.save();
+    });
+
+    await Project.findByIdAndDelete(id);
+
+    res.json({ message: "Project has been deleted" });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 /*
     route: DELETE /project

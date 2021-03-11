@@ -7,7 +7,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 router.post("/project/create", authMiddleware, projectController.createProject);
 router.post("/project/addMember", authMiddleware, projectController.addMember);
 router.delete(
-  "/project/deleteProject",
+  "/project/deleteProject/:id",
   authMiddleware,
   projectController.deleteProject
 );
