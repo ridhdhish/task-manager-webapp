@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
 
 import BackSvg from "../../utils/wave.svg";
@@ -9,7 +10,18 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faLock } from "@fortawesome/free-solid-svg-icons";
 
-const login = (props) => {
+import { login } from "../../store/action/auth";
+
+const Login = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+
+  const loginHandler = async () => {
+    await dispatch(login({ email, password }));
+  };
+
   return (
     <div style={{ overflowY: "hidden", height: "100vh" }}>
       <div className={styles.nav}>
@@ -38,6 +50,10 @@ const login = (props) => {
                   name="email"
                   placeholder="Enter your email"
                   autoComplete="off"
+                  required
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -51,11 +67,24 @@ const login = (props) => {
                   type="password"
                   name="password"
                   placeholder="Enter your password"
+                  required
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
               </div>
             </div>
           </form>
-          <button className={styles.button}>Log In</button>
+          <button
+            onClick={() => {
+              if (email && password) {
+                loginHandler();
+              }
+            }}
+            className={styles.button}
+          >
+            Log In
+          </button>
           <a href="#home" style={{ marginTop: 0 }}>
             Forgot password?
           </a>
@@ -66,4 +95,4 @@ const login = (props) => {
   );
 };
 
-export default login;
+export default Login;
