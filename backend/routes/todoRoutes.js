@@ -4,6 +4,8 @@ const todoController = require("../controllers/todoController");
 
 const router = Router();
 
-router.post("/todo", authMiddleware, todoController.createtodo);
-router.delete("/todo", authMiddleware, todoController.deletetodo);
+router.post("/todo", authMiddleware, todoController.createTodo);
+router.delete("/todo", authMiddleware, todoController.deleteTodo);
 router.get("/todo", authMiddleware, todoController.getTodo);
+
+module.exports = router;

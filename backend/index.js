@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
@@ -14,6 +15,7 @@ require("dotenv").config();
 
 // Middlewares
 app.use(express.json());
+app.use(cors());
 
 // Database connection
 const conn = process.env.DB_CONN;

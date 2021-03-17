@@ -1,15 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./signup.module.css";
 
 import BackSvg from "../../utils/wave.svg";
 import Logo from "../../utils/logo.png";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faLock } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
 
-const signup = (props) => {
+import { signup } from "../../store/action/auth";
+
+const Signup = (props) => {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [passwordError, setPasswordError] = useState(false);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const signupHandler = async () => {
+    if (user.password.length < 6) {
+      setPasswordError(true);
+    } else {
+      await dispatch(signup(user));
+      const token = localStorage.getItem("x-authorization-token");
+      if (token) {
+        history.push("/");
+      }
+    }
+  };
+
   return (
     <div style={{ overflowY: "hidden", height: "100vh" }}>
       <div className={styles.nav}>
@@ -38,6 +63,9 @@ const signup = (props) => {
                   name="email"
                   placeholder="Enter your email"
                   autoComplete="off"
+                  onChange={(e) => {
+                    setUser({ ...user, email: e.target.value });
+                  }}
                 />
               </div>
             </div>
@@ -51,11 +79,35 @@ const signup = (props) => {
                   type="password"
                   name="password"
                   placeholder="Enter your password"
+                  onChange={(e) => {
+                    if (e.target.value.length > 5) {
+                      setPasswordError(false);
+                    }
+                    setUser({ ...user, password: e.target.value });
+                  }}
                 />
+                {passwordError ? (
+                  <p
+                    style={{ color: "red", marginLeft: -10, marginBottom: 20 }}
+                  >
+                    Password must be of atleast 6 characters
+                  </p>
+                ) : (
+                  []
+                )}
               </div>
             </div>
           </form>
-          <button className={styles.button}>Signup</button>
+          <button
+            onClick={() => {
+              if (user.email && user.password) {
+                signupHandler();
+              }
+            }}
+            className={styles.button}
+          >
+            Signup
+          </button>
         </div>
         <p>let's make the world more productive, together</p>
       </div>
@@ -63,4 +115,4 @@ const signup = (props) => {
   );
 };
 
-export default signup;
+export default Signup;

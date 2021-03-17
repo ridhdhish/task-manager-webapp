@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../Navbar/navbar";
 import styles from "./home.module.css";
+
+import { useHistory } from "react-router-dom";
 
 import { FaRegFolderOpen } from "react-icons/fa";
 import { RiTimerLine } from "react-icons/ri";
 
-const home = (props) => {
+const Home = (props) => {
+  const history = useHistory();
+
+  useEffect(() => {
+    const token = localStorage.getItem("x-authorization-token");
+    if (!token) {
+      history.push("/login");
+    }
+  }, []);
+
   return (
     <div className={styles.container}>
       <div style={{ width: "97.5vw", display: "flex" }}>
@@ -82,4 +93,4 @@ const home = (props) => {
   );
 };
 
-export default home;
+export default Home;

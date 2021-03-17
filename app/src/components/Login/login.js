@@ -5,7 +5,7 @@ import styles from "./login.module.css";
 import BackSvg from "../../utils/wave.svg";
 import Logo from "../../utils/logo.png";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faLock } from "@fortawesome/free-solid-svg-icons";
@@ -17,9 +17,15 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const loginHandler = async () => {
     await dispatch(login({ email, password }));
+    const token = localStorage.getItem("x-authorization-token");
+    console.log(token);
+    if (token) {
+      history.push("/");
+    }
   };
 
   return (
