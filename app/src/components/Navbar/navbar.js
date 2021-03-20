@@ -5,7 +5,7 @@ import { MdTimeline, MdDashboard, MdAdd } from "react-icons/md";
 
 import user from "../../assets/user2.png";
 
-const navbar = () => {
+const navbar = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.nav}>
@@ -28,7 +28,12 @@ const navbar = () => {
         </div>
         <div className={styles.navLower}>
           <button>
-            <MdAdd style={{ marginTop: 3.5 }} color="white" size="1.7rem" />
+            <MdAdd
+              onClick={props.addProject}
+              style={{ marginTop: 3.5 }}
+              color="white"
+              size="1.7rem"
+            />
           </button>
           <div
             style={{

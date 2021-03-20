@@ -1,0 +1,55 @@
+.projectForm {
+  background: white;
+  width: 25rem;
+  padding: 1.5rem;
+  padding-top: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.projectForm h1 {
+  color: rgb(75, 75, 75);
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+
+.projectForm input {
+  border-bottom: 1px solid black;
+  margin-bottom: 2rem;
+  width: 96%;
+}
+
+p {
+  text-align: left;
+}
+
+.projectForm button {
+  width: 100px;
+  background: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.projectForm .success {
+  color: rgb(9, 177, 9);
+  border: 2px solid rgb(9, 177, 9);
+}
+
+.projectForm .danger {
+  color: red;
+  border: 2px solid red;
+}
+
+.danger:hover {
+  color: white;
+  background-color: red;
+}
+
+.success:hover {
+  color: white;
+  background-color: rgb(9, 177, 9);
+}

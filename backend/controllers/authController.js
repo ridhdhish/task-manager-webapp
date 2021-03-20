@@ -43,3 +43,13 @@ module.exports.login = async (req, res) => {
     return sendResponse(res, "Internal server error");
   }
 };
+
+// Me API
+module.exports.me = async (req, res) => {
+  try {
+    console.log(req.user);
+    res.json({ user: req.user });
+  } catch (err) {
+    console.log(err);
+  }
+};

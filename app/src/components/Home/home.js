@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/navbar";
 import styles from "./home.module.css";
 
@@ -7,21 +7,40 @@ import { useHistory } from "react-router-dom";
 import { FaRegFolderOpen } from "react-icons/fa";
 import { RiTimerLine } from "react-icons/ri";
 
+import ProjectForm from "../Forms/ProjectForm";
+
 const Home = (props) => {
   const history = useHistory();
 
+  const [showForm, setShowForm] = useState(false);
+
   useEffect(() => {
-    const token = localStorage.getItem("x-authorization-token");
-    if (!token) {
-      history.push("/login");
-    }
+    // const token = localStorage.getItem("x-authorization-token");
+    // if (!token) {
+    //   history.push("/login");
+    // }
   }, []);
 
   return (
     <div className={styles.container}>
+      {showForm ? (
+        <div>
+          <div
+            onClick={() => {
+              setShowForm(false);
+              console.log("parent captured");
+            }}
+            className={styles.formContainer}
+          ></div>
+          <ProjectForm onCancel={() => setShowForm(false)} />{" "}
+        </div>
+      ) : (
+        []
+      )}
+
       <div style={{ width: "97.5vw", display: "flex" }}>
         <div className={styles.navbar}>
-          <Navbar />
+          <Navbar addProject={() => setShowForm(true)} />
         </div>
         <div className={styles.main}>
           <h1>

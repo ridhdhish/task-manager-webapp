@@ -14,7 +14,7 @@ export const login = (userData) => async (dispatch, getState) => {
   const data = await response.json();
   console.log(data);
   if (data.user) {
-    localStorage.setItem("x-authorization-token", data.token);
+    localStorage.setItem("x-authorization-token", `bearer ${data.token}`);
     dispatch({
       type: AUTH_USER,
       payload: data,
@@ -35,7 +35,7 @@ export const signup = (userData) => async (dispatch, getState) => {
 
   const data = await response.json();
   if (data.user) {
-    localStorage.setItem("x-authorization-token", data.token);
+    localStorage.setItem("x-authorization-token", `bearer ${data.token}`);
     dispatch({
       type: AUTH_USER,
       payload: data,
