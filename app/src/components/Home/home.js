@@ -20,7 +20,8 @@ const Home = (props) => {
   }, []);
 
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
+  const projects = useSelector((state) => state.project.projects);
+  console.log(projects);
 
   return (
     <div className={styles.container}>
@@ -44,7 +45,7 @@ const Home = (props) => {
         </div>
         <div className={styles.main}>
           <h1>
-            Welcome back, <span>Ridhdhish</span>
+            Welcome back, <span>{user.email}</span>
           </h1>
           <div className={styles.separator}></div>
 
@@ -94,15 +95,28 @@ const Home = (props) => {
           </div>
           <div className={styles.prioritySection}>
             <h2>Priority projects</h2>
-            <div className={styles.pCard}>
-              <p className={styles.pTitle}>Comic Storyboard</p>
-              <div style={{ display: "flex", color: "#efefee" }}>
-                <FaRegFolderOpen />
-                <p>37 Tasks</p>
+            <div style={{ display: "flex" }}>
+              <div className={styles.pCard}>
+                <p className={styles.pTitle}>Comic Storyboard</p>
+                <div style={{ display: "flex", color: "#efefee" }}>
+                  <FaRegFolderOpen />
+                  <p>37 Tasks</p>
+                </div>
+                <div style={{ display: "flex", color: "#efefee" }}>
+                  <RiTimerLine />
+                  <p>3 Days Remaining</p>
+                </div>
               </div>
-              <div style={{ display: "flex", color: "#efefee" }}>
-                <RiTimerLine />
-                <p>3 Days Remaining</p>
+              <div className={styles.pCard}>
+                <p className={styles.pTitle}>Comic Storyboard</p>
+                <div style={{ display: "flex", color: "#efefee" }}>
+                  <FaRegFolderOpen />
+                  <p>37 Tasks</p>
+                </div>
+                <div style={{ display: "flex", color: "#efefee" }}>
+                  <RiTimerLine />
+                  <p>3 Days Remaining</p>
+                </div>
               </div>
             </div>
           </div>

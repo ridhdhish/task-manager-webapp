@@ -9,9 +9,11 @@ import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
 import authReducer from "./store/reducer/auth";
+import projectReducer from "./store/reducer/project";
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  project: projectReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

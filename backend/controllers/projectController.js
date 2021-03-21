@@ -9,7 +9,7 @@ const { findOne } = require("../models/Invite");
     description: Create new project
 */
 module.exports.createProject = async (req, res) => {
-  const { title, description, dueDate } = req.body;
+  const { title, description, dueDate, priority } = req.body;
   const date = new Date(dueDate);
   console.log(date);
 
@@ -18,12 +18,19 @@ module.exports.createProject = async (req, res) => {
       title,
       description,
       dueDate: date,
+      priority,
       creator: req.user._id,
     });
 
     if (!project) {
       return res.status(401).json({ message: "something went wrong!" });
     }
+
+    // Add project to User schema
+    const user = await User.findById(req.user._id);
+
+    user.projects.push(project._id);
+    user.save();
 
     res.status(200).json({ project });
   } catch (err) {

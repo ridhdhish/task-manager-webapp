@@ -21,6 +21,10 @@ const projectSchema = new mongoose.Schema({
   dueDate: {
     type: Date,
   },
+  priority: {
+    type: String,
+    required: true,
+  },
 });
 
 const Project = mongoose.model("Project", projectSchema);
