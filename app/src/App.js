@@ -4,12 +4,9 @@ import Signup from "./components/Signup/signup";
 import Home from "./components/Home/home";
 
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { Provider } from "react-redux";
-import { combineReducers, createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-
-import authReducer from "./store/reducer/auth";
+import { me } from "./store/action/auth";
 
 import {
   BrowserRouter as Router,
@@ -18,14 +15,10 @@ import {
   Redirect,
 } from "react-router-dom";
 
-const rootReducer = combineReducers({
-  auth: authReducer,
-});
-
-const store = createStore(rootReducer, applyMiddleware(thunk));
-
 function App() {
   const [redirect, setRedirect] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // call Me API here
@@ -47,7 +40,11 @@ function App() {
       if (Object.keys(data).length === 0 && data.constructor === Object) {
         // Redirect to login page
         setRedirect(true);
+        return;
       }
+
+      const token = localStorage.getItem("x-authorization-token").split(" ")[1];
+      await dispatch(me(data, token));
 
       setRedirect(false);
     };
@@ -56,24 +53,22 @@ function App() {
   }, []);
 
   return (
-    <Provider store={store}>
-      <div>
-        <Router>
-          {redirect ? <Redirect to="/login" /> : []}
-          <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
-    </Provider>
+    <div>
+      <Router>
+        {redirect ? <Redirect to="/login" /> : []}
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
   );
 }
 

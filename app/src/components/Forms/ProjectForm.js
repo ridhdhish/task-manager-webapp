@@ -15,7 +15,7 @@ const ProjectForm = (props) => {
         <p>Name*</p>
         <input
           type="text"
-          autocomplete="off"
+          autoComplete="off"
           required
           name="name"
           placeholder="Enter name"
@@ -30,7 +30,7 @@ const ProjectForm = (props) => {
         <p>Description</p>
         <input
           type="text"
-          autocomplete="off"
+          autoComplete="off"
           required
           name="description"
           placeholder="Enter description"
@@ -45,7 +45,7 @@ const ProjectForm = (props) => {
         <p>Priority*</p>
         <input
           type="text"
-          autocomplete="off"
+          autoComplete="off"
           required
           name="priority"
           placeholder="Select priority"
@@ -58,7 +58,7 @@ const ProjectForm = (props) => {
         }}
       >
         <p>Due date*</p>
-        <input type="date" autocomplete="off" required name="date" />
+        <input type="date" autoComplete="off" required name="date" />
       </div>
 
       <div style={{ marginTop: "1.5rem" }}>

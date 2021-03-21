@@ -22,7 +22,6 @@ const Login = (props) => {
   const loginHandler = async () => {
     await dispatch(login({ email, password }));
     const token = localStorage.getItem("x-authorization-token");
-    console.log(token);
     if (token) {
       history.push("/");
     }

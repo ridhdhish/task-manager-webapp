@@ -2,16 +2,14 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/navbar";
 import styles from "./home.module.css";
 
-import { useHistory } from "react-router-dom";
-
 import { FaRegFolderOpen } from "react-icons/fa";
 import { RiTimerLine } from "react-icons/ri";
+
+import { useSelector } from "react-redux";
 
 import ProjectForm from "../Forms/ProjectForm";
 
 const Home = (props) => {
-  const history = useHistory();
-
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -21,6 +19,9 @@ const Home = (props) => {
     // }
   }, []);
 
+  const user = useSelector((state) => state.auth.user);
+  console.log(user);
+
   return (
     <div className={styles.container}>
       {showForm ? (
@@ -28,7 +29,6 @@ const Home = (props) => {
           <div
             onClick={() => {
               setShowForm(false);
-              console.log("parent captured");
             }}
             className={styles.formContainer}
           ></div>
