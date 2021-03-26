@@ -40,7 +40,7 @@
 
 .recentSection {
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
 .recentSection h2 {
@@ -48,19 +48,18 @@
 }
 
 .card {
-  width: 10rem;
-  height: 6rem;
+  width: 15rem;
   display: flex;
   margin-top: 1.6rem;
   background-color: white;
   border-radius: 8px;
-  padding: 1rem 1.5rem;
+  padding: 1.5rem 1.5rem;
   cursor: pointer;
 }
 
 .card .logo {
-  width: 32px;
-  height: 32px;
+  width: 45px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,28 +69,29 @@
 
 .card .logo p {
   color: white;
-  font-size: 0.8rem;
+  font-size: 1.4rem;
   font-weight: 700;
 }
 
 .cardContent {
-  margin-left: 1rem;
+  margin-left: 1.5rem;
+  margin-top: -0.3rem;
 }
 
 .title {
-  font-size: 1rem;
-  font-weight: 900;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .cardContent span {
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   font-weight: 900;
 }
 
 .user {
-  width: 22px;
-  height: 22px;
-  margin-top: 0.5rem;
+  width: 28px;
+  height: 28px;
+  margin-top: 0.4rem;
   margin-right: 0.3rem;
   background-color: blue;
   display: flex;
@@ -102,13 +102,13 @@
 
 .user p {
   color: white;
-  font-size: 0.55rem;
-  font-weight: 700;
+  font-size: 0.7rem;
+  font-weight: 900;
 }
 
 .prioritySection {
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
 .pCard {
@@ -122,16 +122,20 @@
   border-radius: 20px;
   padding: 1.5rem 2rem;
   cursor: pointer;
-  background-color: #5e53dd;
+  background-color: #231cdc;
   color: white;
 }
+
+/* #fff700
+  #ff8000
+*/
 
 .pCard h2 {
   color: #2f3539;
 }
 
 .pCard .pTitle {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 500;
   margin-bottom: 1rem;
 }

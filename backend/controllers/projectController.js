@@ -26,6 +26,10 @@ module.exports.createProject = async (req, res) => {
       return res.status(401).json({ message: "something went wrong!" });
     }
 
+    // Add creator as member too
+    project.members.push(req.user.email);
+    project.save();
+
     // Add project to User schema
     const user = await User.findById(req.user._id);
 
@@ -114,7 +118,7 @@ module.exports.deleteProject = async (req, res) => {
 module.exports.deleteAllProject = async (req, res) => {};
 
 /*
-    Route: GET /project/getAllProject
+    Route: GET /project/getAllProject?limit=3&priority=urgent
     Description: Fetch all projects in which user is involved
 */
 module.exports.getAllProject = async (req, res) => {
@@ -122,13 +126,34 @@ module.exports.getAllProject = async (req, res) => {
     const { projects } = await User.findById(req.user._id);
     const allProjects = [];
 
-    await Promise.all(
-      projects.map(async (id) => {
-        const project = await Project.findById(id);
-        allProjects.push(project);
-      })
-    );
+    if (req.query.limit) {
+      const projects = await Project.find({
+        members: { $in: [req.user.email] },
+        priority: req.query.priority,
+      }).limit(3);
+
+      return res.status(200).json({ projects });
+    }
+
+    // await Promise.all(
+    //   projects.map(async (id) => {
+    //     const project = await Project.findById(id);
+    //     allProjects.push(project);
+    //   })
+    // );
     res.status(200).json({ allProjects });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// Make API to fetch first 3 priority projects
+/*
+    Route: GET /project/limit
+    Description: Fetch first 3 priority projects
+*/
+module.exports.getLimitedProject = async (req, res) => {
+  try {
   } catch (err) {
     console.log(err);
   }
