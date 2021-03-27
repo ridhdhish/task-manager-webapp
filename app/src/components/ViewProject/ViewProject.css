@@ -1,0 +1,35 @@
+.main {
+  width: 420px;
+  height: 600px;
+  margin-left: 1rem;
+  padding: 0rem 2rem;
+}
+
+.header {
+  margin-top: 1.7rem;
+}
+
+.header h2 {
+  font-weight: 900;
+  font-size: 2rem;
+  font-family: "Roboto", sans-serif;
+}
+
+.header p {
+  font-size: 1rem;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.saperator {
+  border-bottom: 0.1px solid #dacfcf;
+  margin: 2.2rem 0rem;
+}
+
+.content {
+  margin-right: 4.5rem;
+}
+
+.description {
+  font-size: 1.2rem;
+}

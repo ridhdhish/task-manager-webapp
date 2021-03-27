@@ -113,14 +113,15 @@
 
 .pCard {
   width: 18rem;
-  height: 10rem;
+  height: 12rem;
   margin-top: 1.6rem;
   margin-right: 2rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: white;
   border-radius: 20px;
-  padding: 1.5rem 2rem;
+  padding: 1rem 2rem;
   cursor: pointer;
   background-color: #231cdc;
   color: white;
@@ -137,10 +138,13 @@
 .pCard .pTitle {
   font-size: 1.7rem;
   font-weight: 500;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.pContent {
+.pCard .pDescription {
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
 }
 
 .formContainer {
@@ -149,4 +153,28 @@
   opacity: 0.6;
   width: 100vw;
   height: 100vh;
+}
+
+.btn {
+  width: 6rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background-color: transparent;
+  border: 3px solid #2f3539;
+}
+
+.btn:hover {
+  background-color: #2f3539;
+  color: white;
+}
+
+.viewProjectContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  background-color: white;
+  padding: 1rem 0rem;
+  border-radius: 1.8rem;
 }

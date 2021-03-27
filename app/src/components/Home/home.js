@@ -11,9 +11,11 @@ import ProjectForm from "../Forms/ProjectForm";
 import { setPriorityProjects } from "../../store/action/project";
 
 import { differenceInDays } from "date-fns";
+import ViewProject from "../ViewProject/ViewProject";
 
 const Home = (props) => {
   const [showForm, setShowForm] = useState(false);
+  const [showProject, setShowProject] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -58,8 +60,11 @@ const Home = (props) => {
           <div className={styles.separator}></div>
 
           <div className={styles.recentSection}>
-            <h2>Projects with nearer deadline</h2>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h2>Projects with nearer deadline</h2>
+              <button className={styles.btn}>View all</button>
+            </div>
+            <div style={{ display: "flex", marginTop: -20 }}>
               <div className={styles.card}>
                 <div className={styles.logo}>
                   <p>R</p>
@@ -102,8 +107,11 @@ const Home = (props) => {
             </div>
           </div>
           <div className={styles.prioritySection}>
-            <h2>Priority projects</h2>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h2>Priority projects</h2>
+              <button className={styles.btn}>View all</button>
+            </div>
+            <div style={{ display: "flex", marginTop: -20 }}>
               {priorityProjects &&
                 priorityProjects.map((p) => {
                   const currentDate = new Date();
@@ -112,9 +120,16 @@ const Home = (props) => {
                   const remainingDays = differenceInDays(dueDate, currentDate);
 
                   return (
-                    <div key={p._id} className={styles.pCard}>
+                    <div
+                      key={p._id}
+                      className={styles.pCard}
+                      onClick={() => setShowProject(true)}
+                    >
                       <p className={styles.pTitle}>{p.title}</p>
-                      <div style={{ alignItems: "flex-end" }}>
+                      <p className={styles.pDescription}>
+                        {p.description} Hello bratha, hey sista, buy 1 skirt and
+                      </p>
+                      <div>
                         <div
                           style={{
                             display: "flex",
@@ -141,6 +156,13 @@ const Home = (props) => {
                   );
                 })}
             </div>
+            <>
+              {showProject && (
+                <div className={styles.viewProjectContainer}>
+                  <ViewProject />
+                </div>
+              )}
+            </>
           </div>
         </div>
       </div>
