@@ -22,7 +22,11 @@ export default function ViewProject() {
           <p style={{ color: "#433939", fontSize: "1.2rem", fontWeight: 500 }}>
             Due date:{" "}
             <span
-              style={{ fontWeight: "bold", fontSize: "1.2rem", color: "black" }}
+              style={{
+                fontWeight: "bold",
+                fontSize: "1.2rem",
+                color: "black",
+              }}
             >
               26/04/2021
             </span>
@@ -49,12 +53,17 @@ export default function ViewProject() {
               height: "5rem",
               marginTop: "0.5rem",
               display: "flex",
+              flexWrap: "wrap",
+              wordWrap: "break-word",
             }}
           >
             <UserLogo color="FF0000" char="R" />
             <UserLogo color="DAA211" char="M" />
             <UserLogo color="001AFF" char="J" />
             <UserLogo color="5DB916" char="S" />
+            <UserLogo color="FF0000" char="R" />
+            <UserLogo color="DAA211" char="M" />
+            <UserLogo color="5c6066" char="+3" />
           </div>
         </div>
       </div>

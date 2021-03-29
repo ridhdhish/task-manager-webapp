@@ -1,0 +1,27 @@
+.task {
+  width: 20rem;
+  height: 9rem;
+  background-color: white;
+  border-radius: 11px;
+}
+
+.task-title {
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-decoration: underline;
+  margin: 1rem;
+}
+
+.task .description {
+  margin-top: 0.7rem;
+  margin-left: 1rem;
+  font-size: 1rem;
+}
+
+.task .btn {
+  background-color: #21da28;
+  color: white;
+  width: 4rem;
+  height: 1.8rem;
+  margin-left: 1rem;
+}

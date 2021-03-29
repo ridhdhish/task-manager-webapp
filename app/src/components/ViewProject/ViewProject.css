@@ -1,12 +1,12 @@
 .main {
-  width: 420px;
+  width: 500px;
   height: 600px;
-  margin-left: 1rem;
-  padding: 0rem 2rem;
+  /*padding: 0rem 2rem;*/
 }
 
 .header {
-  margin-top: 1.7rem;
+  margin: 0rem 2.5rem;
+  margin-top: 2rem;
 }
 
 .header h2 {
@@ -27,6 +27,7 @@
 }
 
 .content {
+  margin: 0rem 2.5rem;
   margin-right: 4.5rem;
 }
 

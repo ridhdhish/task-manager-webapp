@@ -12,6 +12,7 @@ import { setPriorityProjects } from "../../store/action/project";
 
 import { differenceInDays } from "date-fns";
 import ViewProject from "../ViewProject/ViewProject";
+import TaskList from "../TaskList/TaskList";
 
 const Home = (props) => {
   const [showForm, setShowForm] = useState(false);
@@ -160,6 +161,7 @@ const Home = (props) => {
               {showProject && (
                 <div className={styles.viewProjectContainer}>
                   <ViewProject />
+                  <TaskList />
                 </div>
               )}
             </>

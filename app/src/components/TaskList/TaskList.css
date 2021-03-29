@@ -1,0 +1,19 @@
+.container {
+  width: 500px;
+  height: 600px;
+  background-color: #cec9ee;
+  border-radius: 0rem 1.8rem 1.8rem 0rem;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  margin: 0rem 2.5rem;
+  margin-top: 2rem;
+}
+
+.title h2 {
+  font-weight: 900;
+  font-size: 2rem;
+  font-family: "Roboto", sans-serif;
+}
