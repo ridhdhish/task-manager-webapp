@@ -1,27 +1,33 @@
-.task {
+.task-container {
   width: 20rem;
-  height: 9rem;
+  height: 8rem;
   background-color: white;
   border-radius: 11px;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
 }
 
 .task-title {
-  font-weight: 500;
   font-size: 1.2rem;
+  font-weight: 500;
   text-decoration: underline;
-  margin: 1rem;
 }
 
-.task .description {
-  margin-top: 0.7rem;
-  margin-left: 1rem;
+.task-description {
   font-size: 1rem;
+  margin-top: 0.5rem;
 }
 
-.task .btn {
+.task-btn {
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 4rem;
+  height: 2rem;
+  margin-bottom: 0;
   background-color: #21da28;
   color: white;
-  width: 4rem;
-  height: 1.8rem;
-  margin-left: 1rem;
+  border-radius: 5px;
 }

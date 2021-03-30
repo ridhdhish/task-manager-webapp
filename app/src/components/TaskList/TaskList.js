@@ -25,8 +25,16 @@ export default function TaskList() {
         </div>
       </div>
       <div
-        style={{ display: "flex", flexFlow: "column", alignItems: "center" }}
+        style={{
+          display: "flex",
+          flexFlow: "column",
+          alignItems: "center",
+          maxHeight: "32rem",
+          overflow: "scroll",
+        }}
       >
+        <Task />
+        <Task />
         <Task />
       </div>
     </div>
