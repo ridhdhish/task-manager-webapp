@@ -9,11 +9,20 @@
   display: flex;
   justify-content: space-between;
   margin: 0rem 2.5rem;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
 .title h2 {
   font-weight: 900;
   font-size: 2rem;
   font-family: "Roboto", sans-serif;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #6a5cc7;
+  border-radius: 5px;
+}
+*::-webkit-scrollbar {
+  background: transparent;
+  width: 5px;
 }

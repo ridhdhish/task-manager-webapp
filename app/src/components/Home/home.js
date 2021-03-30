@@ -157,17 +157,35 @@ const Home = (props) => {
                   );
                 })}
             </div>
-            <>
-              {showProject && (
-                <div className={styles.viewProjectContainer}>
-                  <ViewProject />
-                  <TaskList />
-                </div>
-              )}
-            </>
           </div>
         </div>
       </div>
+      <>
+        {showProject && (
+          <>
+            <div
+              onClick={() => {
+                setShowProject(false);
+              }}
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                background: "black",
+                opacity: 0.7,
+              }}
+            ></div>
+            <div className={styles.viewProjectContainer}>
+              <ViewProject
+                close={() => {
+                  setShowProject(false);
+                }}
+              />
+              <TaskList />
+            </div>
+          </>
+        )}
+      </>
     </div>
   );
 };

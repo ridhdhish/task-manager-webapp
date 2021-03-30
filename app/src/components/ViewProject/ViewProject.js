@@ -2,9 +2,18 @@ import React from "react";
 import "./ViewProject.css";
 import UserLogo from "../UserLogo/UserLogo";
 
-export default function ViewProject() {
+import { IoIosArrowBack } from "react-icons/io";
+import { BsArrowLeftShort } from "react-icons/bs";
+
+export default function ViewProject(props) {
   return (
     <div className="main">
+      <BsArrowLeftShort
+        style={{ marginLeft: "1rem", marginTop: "0.5rem", cursor: "pointer" }}
+        size={35}
+        color="blue"
+        onClick={props.close}
+      />
       <div className="header">
         <h2>Random shop</h2>
         <p>By, Ridhdhish Desai</p>
