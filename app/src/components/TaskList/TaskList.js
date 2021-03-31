@@ -1,15 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Task from "./Task/Task";
-
-import SimpleBar from "simplebar-react";
-import "simplebar/dist/simplebar.min.css";
+import { getToken } from "../../utils/getToken";
 
 import "./TaskList.css";
 
 import { HiPlus } from "react-icons/hi";
 
-export default function TaskList() {
+export default function TaskList(props) {
   const [scroll, setScroll] = useState({ overflow: "hidden" });
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const token = getToken();
+    const getAllTasks = async () => {
+      const response = await fetch("http://localhost:3000/api/task", {
+        method: "GET",
+        cache: "no-cache",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+          "x-authorization-token": token,
+          body: JSON.stringify({ projectId: props.projectId }),
+        },
+      });
+
+      const data = await response.json();
+      setTasks(data);
+    };
+
+    getAllTasks();
+  }, []);
 
   return (
     <div className="container">
@@ -46,9 +66,21 @@ export default function TaskList() {
           setScroll({ overflow: "hidden" });
         }}
       >
-        <Task />
-        <Task />
-        <Task />
+        {tasks.length ? (
+          <>
+            {tasks.map((task) => (
+              <Task task={task} />
+            ))}
+          </>
+        ) : (
+          <h2
+            style={{
+              marginTop: "40%",
+            }}
+          >
+            No tasks are available
+          </h2>
+        )}
       </div>
     </div>
   );

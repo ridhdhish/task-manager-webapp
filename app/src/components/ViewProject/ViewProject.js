@@ -2,7 +2,6 @@ import React from "react";
 import "./ViewProject.css";
 import UserLogo from "../UserLogo/UserLogo";
 
-import { IoIosArrowBack } from "react-icons/io";
 import { BsArrowLeftShort } from "react-icons/bs";
 
 export default function ViewProject(props) {
@@ -15,17 +14,12 @@ export default function ViewProject(props) {
         onClick={props.close}
       />
       <div className="header">
-        <h2>Random shop</h2>
-        <p>By, Ridhdhish Desai</p>
+        <h2>{props.project.title}</h2>
+        <p>By, {props.project.creator}</p>
       </div>
       <div className="saperator"></div>
       <div className="content">
-        <p className="description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </p>
+        <p className="description">{props.project.description}</p>
 
         <div style={{ marginTop: "2rem" }}>
           <p style={{ color: "#433939", fontSize: "1.2rem", fontWeight: 500 }}>
@@ -37,7 +31,7 @@ export default function ViewProject(props) {
                 color: "black",
               }}
             >
-              26/04/2021
+              {new Date(props.project.dueDate).toLocaleDateString()}
             </span>
           </p>
           <p style={{ color: "#433939", fontSize: "1.2rem", fontWeight: 500 }}>

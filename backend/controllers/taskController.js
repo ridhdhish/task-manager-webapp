@@ -22,11 +22,11 @@ module.exports.createTask = async (req, res) => {
     description: Fetch all tasks
 */
 module.exports.getAllTask = async (req, res) => {
+  console.log("hello");
   try {
     const email = req.user.email;
-    const _id = req.user._id;
 
-    const tasks = await Task.find({ email, _id });
+    const tasks = await Task.find({ email, projectId: req.body.projectId });
 
     res.status(200).json({ tasks });
   } catch (err) {

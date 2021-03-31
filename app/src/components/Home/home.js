@@ -17,6 +17,7 @@ import TaskList from "../TaskList/TaskList";
 const Home = (props) => {
   const [showForm, setShowForm] = useState(false);
   const [showProject, setShowProject] = useState(false);
+  const [currentProject, setCurrentProject] = useState({});
 
   const dispatch = useDispatch();
 
@@ -124,7 +125,10 @@ const Home = (props) => {
                     <div
                       key={p._id}
                       className={styles.pCard}
-                      onClick={() => setShowProject(true)}
+                      onClick={() => {
+                        setShowProject(true);
+                        setCurrentProject(p);
+                      }}
                     >
                       <p className={styles.pTitle}>{p.title}</p>
                       <p className={styles.pDescription}>
@@ -180,8 +184,9 @@ const Home = (props) => {
                 close={() => {
                   setShowProject(false);
                 }}
+                project={currentProject}
               />
-              <TaskList />
+              <TaskList projectId={currentProject._id} />
             </div>
           </>
         )}

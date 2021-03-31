@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const authMiddleware = async (req, res, next) => {
   try {
     const authHeader = req.header("x-authorization-token");
+    console.log(authHeader);
     if (!authHeader) {
       return res.json({ err: "Token not found" });
     }

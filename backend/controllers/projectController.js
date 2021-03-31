@@ -19,7 +19,7 @@ module.exports.createProject = async (req, res) => {
       description,
       dueDate: date,
       priority,
-      creator: req.user._id,
+      creator: req.user.email,
     });
 
     if (!project) {
