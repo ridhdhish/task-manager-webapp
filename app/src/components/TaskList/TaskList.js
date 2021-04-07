@@ -5,10 +5,12 @@ import { getToken } from "../../utils/getToken";
 import "./TaskList.css";
 
 import { HiPlus } from "react-icons/hi";
+import UserLogo from "../UserLogo/UserLogo";
 
 export default function TaskList(props) {
   const [scroll, setScroll] = useState({ overflow: "hidden" });
   const [tasks, setTasks] = useState([]);
+  const [addNewTask, setAddNewTask] = useState(false);
 
   useEffect(() => {
     const token = getToken();
@@ -20,7 +22,7 @@ export default function TaskList(props) {
         headers: {
           "Content-type": "application/json",
           "x-authorization-token": token,
-          body: JSON.stringify({ projectId: props.projectId }),
+          body: JSON.stringify({ projectId: props.project._id }),
         },
       });
 
@@ -32,23 +34,37 @@ export default function TaskList(props) {
   }, []);
 
   return (
-    <div className="container">
+    <div
+      className="container"
+      onClick={() => {
+        setAddNewTask(false);
+      }}
+    >
       <div className="title">
         <h2>My Tasks</h2>
-        <div
-          style={{
-            borderRadius: "50%",
-            background: "#0047FF",
-            width: 40,
-            height: 40,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-        >
-          <HiPlus size={40} color="white" />
-        </div>
+        {true && (
+          <div
+            style={{
+              borderRadius: "50%",
+              background: "#0047FF",
+              width: 40,
+              height: 40,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+          >
+            <HiPlus
+              onClick={(e) => {
+                setAddNewTask(true);
+                e.stopPropagation(true);
+              }}
+              size={40}
+              color="white"
+            />
+          </div>
+        )}
       </div>
       <div
         style={{
@@ -66,6 +82,7 @@ export default function TaskList(props) {
           setScroll({ overflow: "hidden" });
         }}
       >
+        {addNewTask && <Task newTask={true} />}
         {tasks.length ? (
           <>
             {tasks.map((task) => (
@@ -73,13 +90,15 @@ export default function TaskList(props) {
             ))}
           </>
         ) : (
-          <h2
-            style={{
-              marginTop: "40%",
-            }}
-          >
-            No tasks are available
-          </h2>
+          !addNewTask && (
+            <h2
+              style={{
+                marginTop: "40%",
+              }}
+            >
+              No tasks are available
+            </h2>
+          )
         )}
       </div>
     </div>

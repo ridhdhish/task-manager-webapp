@@ -186,7 +186,7 @@ const Home = (props) => {
                 }}
                 project={currentProject}
               />
-              <TaskList projectId={currentProject._id} />
+              <TaskList project={currentProject} user={user} />
             </div>
           </>
         )}
