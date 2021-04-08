@@ -158,3 +158,21 @@ module.exports.getLimitedProject = async (req, res) => {
     console.log(err);
   }
 };
+
+/*
+    Route: GET /project/latest
+    Description: Fetch latest 3 projects
+*/
+module.exports.getLatestProject = async (req, res) => {
+  try {
+    const projects = await Project.find({
+      members: { $in: [req.user.email] },
+    })
+      .sort({ _id: -1 })
+      .limit(4);
+
+    return res.status(200).json({ projects });
+  } catch (err) {
+    console.log(err);
+  }
+};

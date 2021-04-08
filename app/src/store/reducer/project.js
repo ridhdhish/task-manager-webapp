@@ -1,8 +1,13 @@
-import { ADD_PROJECT, SET_PRIORITY_PROJECT } from "../types";
+import {
+  ADD_PROJECT,
+  SET_PRIORITY_PROJECT,
+  SET_LATEST_PROJECT,
+} from "../types";
 
 const initialState = {
   projects: [],
   priorityProjects: [],
+  latestProjects: [],
 };
 
 const projectReducer = (state = initialState, action) => {
@@ -21,6 +26,12 @@ const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         priorityProjects: payload,
+      };
+    }
+    case SET_LATEST_PROJECT: {
+      return {
+        ...state,
+        latestProjects: payload,
       };
     }
     default: {

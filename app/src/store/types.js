@@ -2,3 +2,4 @@ export const AUTH_USER = "AUTH_USER";
 
 export const ADD_PROJECT = "ADD_PROJECT";
 export const SET_PRIORITY_PROJECT = "SET_PRIORITY_PROJECT";
+export const SET_LATEST_PROJECT = "SET_LATEST_PROJECT";

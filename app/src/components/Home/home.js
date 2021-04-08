@@ -8,7 +8,10 @@ import { RiTimerLine } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
 
 import ProjectForm from "../Forms/ProjectForm";
-import { setPriorityProjects } from "../../store/action/project";
+import {
+  setPriorityProjects,
+  setRecentProjects,
+} from "../../store/action/project";
 
 import { differenceInDays } from "date-fns";
 import ViewProject from "../ViewProject/ViewProject";
@@ -19,18 +22,35 @@ const Home = (props) => {
   const [showProject, setShowProject] = useState(false);
   const [currentProject, setCurrentProject] = useState({});
 
+  const monthNames = [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec",
+  ];
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getPriorityProject = async () => {
       await dispatch(setPriorityProjects());
+      await dispatch(setRecentProjects());
     };
 
     getPriorityProject();
   }, []);
 
   const user = useSelector((state) => state.auth.user);
-  const projects = useSelector((state) => state.project.projects);
+  const latestProjects = useSelector((state) => state.project.latestProjects);
+  console.log(latestProjects);
   const priorityProjects = useSelector(
     (state) => state.project.priorityProjects
   );
@@ -63,49 +83,85 @@ const Home = (props) => {
 
           <div className={styles.recentSection}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h2>Projects with nearer deadline</h2>
+              <h2>Latest Added Projects</h2>
               <button className={styles.btn}>View all</button>
             </div>
             <div style={{ display: "flex", marginTop: -20 }}>
-              <div className={styles.card}>
-                <div className={styles.logo}>
-                  <p>R</p>
-                </div>
-                <div className={styles.cardContent}>
-                  <p className={styles.title}>Random shop</p>
-                  <p style={{ color: "gray" }}>
-                    <span style={{ color: "#3862df" }}>21 tasks</span> |{" "}
-                    <span style={{ color: "#ec5858" }}>2 sep 21</span>
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "1.1rem",
-                      marginTop: "0.8rem",
-                      fontWeight: 700,
-                      color: "gray",
-                    }}
-                  >
-                    Members
-                  </p>
-                  <div style={{ display: "flex" }}>
-                    <div
-                      style={{ backgroundColor: "green" }}
-                      className={styles.user}
-                    >
-                      <p>M</p>
-                    </div>
-                    <div className={styles.user}>
-                      <p>R</p>
-                    </div>
-                    <div
-                      className={styles.user}
-                      style={{ backgroundColor: "red" }}
-                    >
-                      <p>S</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {latestProjects
+                ? latestProjects.map((project) => {
+                    const month =
+                      monthNames[new Date(project.dueDate).getMonth()];
+                    const date = new Date(project.dueDate).getDate();
+                    const year = new Date(project.dueDate).getFullYear();
+                    return (
+                      <div
+                        className={styles.card}
+                        style={{ marginRight: "2rem" }}
+                      >
+                        <div className={styles.logo}>
+                          <p>{project.title[0].toUpperCase()}</p>
+                        </div>
+                        <div className={styles.cardContent}>
+                          <p className={styles.title}>
+                            {project.title.toUpperCase()}
+                          </p>
+                          <p style={{ color: "gray" }}>
+                            <span style={{ color: "#3862df" }}>21 tasks</span> |{" "}
+                            <span style={{ color: "#ec5858" }}>
+                              {date} {month} {year}
+                            </span>
+                          </p>
+                          <p
+                            style={{
+                              fontSize: "1.1rem",
+                              marginTop: "0.8rem",
+                              fontWeight: 700,
+                              color: "gray",
+                            }}
+                          >
+                            Members
+                          </p>
+                          <div style={{ display: "flex" }}>
+                            {project.members.length > 3 ? (
+                              <>
+                                {project.members.map((m, index) => {
+                                  if (index < 3) {
+                                    return (
+                                      <div
+                                        className={styles.user}
+                                        style={{ backgroundColor: "red" }}
+                                      >
+                                        <p>{m[0].toUpperCase()}</p>
+                                      </div>
+                                    );
+                                  }
+                                })}
+
+                                <div
+                                  className={styles.user}
+                                  style={{ backgroundColor: "red" }}
+                                >
+                                  <p>+{project.members.length - 3}</p>
+                                </div>
+                              </>
+                            ) : project.members.length ? (
+                              project.members.map((m) => (
+                                <div
+                                  style={{ backgroundColor: "green" }}
+                                  className={styles.user}
+                                >
+                                  <p>{m[0].toUpperCase()}</p>
+                                </div>
+                              ))
+                            ) : (
+                              <p>No members are added.</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                : []}
             </div>
           </div>
           <div className={styles.prioritySection}>

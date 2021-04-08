@@ -21,5 +21,10 @@ router.get(
   authMiddleware,
   projectController.getAllProject
 );
+router.get(
+  "/project/latest",
+  authMiddleware,
+  projectController.getLatestProject
+);
 
 module.exports = router;
