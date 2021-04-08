@@ -1,6 +1,6 @@
-.task-container {
+.new-task-container {
   width: 20rem;
-  height: 9rem;
+  height: 12rem;
   background-color: white;
   border-radius: 11px;
   margin-top: 1.5rem;
@@ -21,7 +21,7 @@
   margin-top: 0.5rem;
 }
 
-.task-btn {
+.new-task-btn {
   font-size: 0.9rem;
   font-weight: 500;
   width: 4rem;
@@ -30,4 +30,5 @@
   background-color: #21da28;
   color: white;
   border-radius: 5px;
+  margin-left: 1rem;
 }

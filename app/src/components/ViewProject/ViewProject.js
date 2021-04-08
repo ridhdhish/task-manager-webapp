@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ViewProject.css";
 import UserLogo from "../UserLogo/UserLogo";
 
 import { BsArrowLeftShort } from "react-icons/bs";
 
 export default function ViewProject(props) {
+  const [add, setAdd] = useState(false);
+
   return (
     <div className="main">
       <BsArrowLeftShort
@@ -69,6 +71,18 @@ export default function ViewProject(props) {
             <UserLogo color="5c6066" char="+3" />
           </div>
         </div>
+        <button
+          style={{
+            backgroundColor: "green",
+            width: 100,
+            height: 40,
+            fontSize: 14,
+            color: "white",
+            marginTop: "2rem",
+          }}
+        >
+          Add Member
+        </button>
       </div>
     </div>
   );

@@ -22,11 +22,16 @@ module.exports.createTask = async (req, res) => {
     description: Fetch all tasks
 */
 module.exports.getAllTask = async (req, res) => {
-  console.log("hello");
+  console.log(req.query);
   try {
     const email = req.user.email;
+    let tasks;
 
-    const tasks = await Task.find({ email, projectId: req.body.projectId });
+    if (req.query.creator) {
+      tasks = await Task.find({ projectId: req.query.projectId });
+    } else {
+      tasks = await Task.find({ email, projectId: req.query.projectId });
+    }
 
     res.status(200).json({ tasks });
   } catch (err) {
@@ -123,14 +128,14 @@ module.exports.deleteAllTask = async (req, res) => {
 */
 module.exports.deleteTask = async (req, res) => {
   try {
-    const email = req.user.email;
+    //const email = req.user.email;
 
-    const tasks = await Task.find({ email, _id: req.params.id });
+    const tasks = await Task.find({ _id: req.params.id });
     if (!tasks) {
       return sendResponse(res, "Unable to delete a task", 404);
     }
 
-    await Task.deleteOne({ email, _id: req.params.id });
+    await Task.deleteOne({ _id: req.params.id });
 
     res.status(200).json({ task: "Selected task is deleted" });
   } catch (err) {

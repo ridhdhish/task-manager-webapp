@@ -1,37 +1,83 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
 import Task from "./Task/Task";
+import NewTask from "./NewTask/NewTask";
 import { getToken } from "../../utils/getToken";
 
 import "./TaskList.css";
 
 import { HiPlus } from "react-icons/hi";
-import UserLogo from "../UserLogo/UserLogo";
 
 export default function TaskList(props) {
   const [scroll, setScroll] = useState({ overflow: "hidden" });
   const [tasks, setTasks] = useState([]);
   const [addNewTask, setAddNewTask] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const user = useSelector((state) => state.auth.user);
+
+  const token = getToken();
 
   useEffect(() => {
-    const token = getToken();
     const getAllTasks = async () => {
-      const response = await fetch("http://localhost:3000/api/task", {
-        method: "GET",
-        cache: "no-cache",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-          "x-authorization-token": token,
-          body: JSON.stringify({ projectId: props.project._id }),
-        },
-      });
+      setIsLoading(true);
+      const response = await fetch(
+        `http://localhost:3000/api/task?projectId=${
+          props.project._id
+        }&creator=${user._id === props.project.creator}`,
+        {
+          method: "GET",
+          cache: "no-cache",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+            "x-authorization-token": token,
+          },
+        }
+      );
 
       const data = await response.json();
-      setTasks(data);
+      setTasks(data.tasks);
+      setIsLoading(false);
     };
 
     getAllTasks();
   }, []);
+
+  const addTaskHandler = async (newTask) => {
+    setAddNewTask(false);
+    console.log(newTask);
+
+    const response = await fetch("http://localhost:3000/api/task/create", {
+      method: "POST",
+      cache: "no-cache",
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+        "x-authorization-token": token,
+      },
+      body: JSON.stringify({ projectId: props.project._id, ...newTask }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+    const newTasks = [...tasks];
+    newTasks.push(data.task);
+    setTasks(newTasks);
+    console.log(tasks);
+  };
+
+  const deleteTaskHandler = (id) => {
+    const taskIndex = tasks.findIndex((task) => {
+      return id === task._id;
+    });
+
+    const newTasks = [...tasks];
+    newTasks.splice(taskIndex, 1);
+
+    setTasks(newTasks);
+  };
 
   return (
     <div
@@ -82,11 +128,16 @@ export default function TaskList(props) {
           setScroll({ overflow: "hidden" });
         }}
       >
-        {addNewTask && <Task newTask={true} />}
+        {addNewTask && <NewTask addTask={addTaskHandler} />}
         {tasks.length ? (
           <>
             {tasks.map((task) => (
-              <Task task={task} />
+              <Task
+                task={task}
+                key={task._id}
+                creator={user._id === props.project.creator}
+                deleteTask={deleteTaskHandler}
+              />
             ))}
           </>
         ) : (
