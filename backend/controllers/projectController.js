@@ -47,27 +47,27 @@ module.exports.createProject = async (req, res) => {
     description: Add members to the project
 */
 module.exports.addMember = async (req, res) => {
-  const { id, inviteId } = req.body;
-  const { email, username } = req.user;
+  const { projectId, email } = req.body;
+  // const { email, username } = req.user;
 
   try {
-    const project = await Project.findById(id);
-    console.log(project.members.includes({ username, email }));
+    const project = await Project.findById(projectId);
 
-    if (project.members.includes({ username, email })) {
-      project.members.push({ username, email });
-      project.save();
-
-      const user = await User.findOne({ email });
-      user.projects.push(id);
-      user.save();
-
-      await Invite.findByIdAndDelete(inviteId);
-
-      return res.status(200).json({ project, user });
+    if (!project) {
+      return res.status(404).json({ err: "unable to add member" });
     }
 
-    res.status(401).json({ message: "User already exists!" });
+    console.log(project.members);
+
+    if (project.members.includes(email)) {
+      console.log("hehehehehehe");
+      return res.status(400).json({ err: "Member is already exists!" });
+    }
+
+    project.members.push(email);
+    project.save();
+
+    res.status(200).json({ project });
   } catch (err) {
     console.log(err);
   }

@@ -2,6 +2,8 @@ import {
   ADD_PROJECT,
   SET_PRIORITY_PROJECT,
   SET_LATEST_PROJECT,
+  UPDATE_PRIORITY_PROJECT,
+  UPDATE_RECENT_PROJECT,
 } from "../types";
 import { getToken } from "../../utils/getToken";
 
@@ -72,5 +74,19 @@ export const setRecentProjects = () => async (dispatch, getState) => {
   dispatch({
     type: SET_LATEST_PROJECT,
     payload: data.projects,
+  });
+};
+
+export const updatePriorityProject = (project) => (dispatch, getState) => {
+  dispatch({
+    type: UPDATE_PRIORITY_PROJECT,
+    payload: project,
+  });
+};
+
+export const updateRecentProject = (project) => (dispatch, getState) => {
+  dispatch({
+    type: UPDATE_RECENT_PROJECT,
+    payload: project,
   });
 };

@@ -2,6 +2,8 @@ import {
   ADD_PROJECT,
   SET_PRIORITY_PROJECT,
   SET_LATEST_PROJECT,
+  UPDATE_PRIORITY_PROJECT,
+  UPDATE_RECENT_PROJECT,
 } from "../types";
 
 const initialState = {
@@ -32,6 +34,29 @@ const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         latestProjects: payload,
+      };
+    }
+    case UPDATE_PRIORITY_PROJECT: {
+      const oldProjects = [...state.priorityProjects];
+      const index = oldProjects.findIndex((p, index) => {
+        return p._id === payload._id;
+      });
+      oldProjects[index] = payload;
+      return {
+        ...state,
+        priorityProjects: oldProjects,
+      };
+    }
+    case UPDATE_RECENT_PROJECT: {
+      const oldProjects = [...state.latestProjects];
+      const index = oldProjects.findIndex((p, index) => {
+        return p._id === payload._id;
+      });
+      oldProjects[index] = payload;
+      console.log(oldProjects[index]);
+      return {
+        ...state,
+        latestProjects: oldProjects,
       };
     }
     default: {

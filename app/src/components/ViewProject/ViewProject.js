@@ -1,11 +1,50 @@
 import React, { useState } from "react";
+import validator from "validator";
+import { useDispatch } from "react-redux";
+
 import "./ViewProject.css";
 import UserLogo from "../UserLogo/UserLogo";
 
+import { getToken } from "../../utils/getToken";
+
 import { BsArrowLeftShort } from "react-icons/bs";
+import {
+  updatePriorityProject,
+  updateRecentProject,
+} from "../../store/action/project";
 
 export default function ViewProject(props) {
-  const [add, setAdd] = useState(false);
+  const [err, setErr] = useState(false);
+  const [email, setEmail] = useState("");
+  const [project, setProject] = useState(props.project);
+
+  const dispatch = useDispatch();
+
+  const token = getToken();
+
+  const addMemberHandler = async (projectId) => {
+    console.log(projectId);
+    const response = await fetch(
+      "http://localhost:3000/api/project/addMember",
+      {
+        method: "POST",
+        cache: "no-cache",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+          "x-authorization-token": token,
+        },
+        body: JSON.stringify({ projectId, email }),
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
+
+    dispatch(updatePriorityProject(data.project));
+    dispatch(updateRecentProject(data.project));
+    setProject(data.project);
+  };
 
   return (
     <div className="main">
@@ -16,12 +55,12 @@ export default function ViewProject(props) {
         onClick={props.close}
       />
       <div className="header">
-        <h2>{props.project.title}</h2>
-        <p>By, {props.project.creator}</p>
+        <h2>{project.title}</h2>
+        <p>By, {project.creator}</p>
       </div>
       <div className="saperator"></div>
       <div className="content">
-        <p className="description">{props.project.description}</p>
+        <p className="description">{project.description}</p>
 
         <div style={{ marginTop: "2rem" }}>
           <p style={{ color: "#433939", fontSize: "1.2rem", fontWeight: 500 }}>
@@ -33,7 +72,7 @@ export default function ViewProject(props) {
                 color: "black",
               }}
             >
-              {new Date(props.project.dueDate).toLocaleDateString()}
+              {new Date(project.dueDate).toLocaleDateString()}
             </span>
           </p>
           <p style={{ color: "#433939", fontSize: "1.2rem", fontWeight: 500 }}>
@@ -62,23 +101,20 @@ export default function ViewProject(props) {
               wordWrap: "break-word",
             }}
           >
-            {props.project.members ? (
-              props.project.members.length > 6 ? (
+            {project.members ? (
+              project.members.length > 6 ? (
                 <>
-                  {props.project.members.map((m, index) => {
+                  {project.members.map((m, index) => {
                     if (index < 7) {
                       return (
                         <UserLogo color="FF0000" char={m[0].toUpperCase()} />
                       );
                     }
                   })}
-                  <UserLogo
-                    color="5c6066"
-                    char={props.project.members.length - 6}
-                  />
+                  <UserLogo color="5c6066" char={project.members.length - 6} />
                 </>
               ) : (
-                props.project.members.map((m, index) => {
+                project.members.map((m, index) => {
                   return <UserLogo color="FF0000" char={m[0].toUpperCase()} />;
                 })
               )
@@ -94,6 +130,17 @@ export default function ViewProject(props) {
             <UserLogo color="5c6066" char="+3" /> */}
           </div>
         </div>
+        <input
+          type="text"
+          placeholder="Enter email of new member"
+          style={{
+            borderBottom: "1px solid #000",
+            width: "15rem",
+            display: "block",
+          }}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
         <button
           style={{
             backgroundColor: "green",
@@ -101,11 +148,35 @@ export default function ViewProject(props) {
             height: 40,
             fontSize: 14,
             color: "white",
-            marginTop: "2rem",
+            marginTop: "1rem",
+          }}
+          onClick={(e) => {
+            if (validator.isEmail(email)) {
+              setErr(false);
+              addMemberHandler(project._id);
+              setEmail("");
+            } else {
+              setErr(true);
+            }
           }}
         >
           Add Member
         </button>
+        {err ? (
+          <div
+            style={{
+              width: "15rem",
+              padding: 10,
+              border: "1px solid red",
+              borderRadius: "5px",
+              marginTop: -10,
+            }}
+          >
+            <p style={{ color: "red" }}>Email is invalid!</p>
+          </div>
+        ) : (
+          []
+        )}
       </div>
     </div>
   );

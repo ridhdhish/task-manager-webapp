@@ -50,7 +50,7 @@ const Home = (props) => {
 
   const user = useSelector((state) => state.auth.user);
   const latestProjects = useSelector((state) => state.project.latestProjects);
-  console.log(latestProjects);
+  console.log("Latest Project: ", latestProjects);
   const priorityProjects = useSelector(
     (state) => state.project.priorityProjects
   );
@@ -95,6 +95,7 @@ const Home = (props) => {
                     const year = new Date(project.dueDate).getFullYear();
                     return (
                       <div
+                        key={project._id}
                         className={styles.card}
                         style={{ marginRight: "2rem" }}
                         onClick={() => {
@@ -244,6 +245,7 @@ const Home = (props) => {
                 close={() => {
                   setShowProject(false);
                 }}
+                update={() => {}}
                 project={currentProject}
               />
               <TaskList project={currentProject} user={user} />
