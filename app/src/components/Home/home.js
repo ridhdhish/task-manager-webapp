@@ -6,6 +6,7 @@ import { FaRegFolderOpen } from "react-icons/fa";
 import { RiTimerLine } from "react-icons/ri";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import ProjectForm from "../Forms/ProjectForm";
 import {
@@ -38,6 +39,13 @@ const Home = (props) => {
   ];
 
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const user = useSelector((state) => state.auth.user);
+  const latestProjects = useSelector((state) => state.project.latestProjects);
+  const priorityProjects = useSelector(
+    (state) => state.project.priorityProjects
+  );
 
   useEffect(() => {
     const getPriorityProject = async () => {
@@ -47,13 +55,6 @@ const Home = (props) => {
 
     getPriorityProject();
   }, []);
-
-  const user = useSelector((state) => state.auth.user);
-  const latestProjects = useSelector((state) => state.project.latestProjects);
-  console.log("Latest Project: ", latestProjects);
-  const priorityProjects = useSelector(
-    (state) => state.project.priorityProjects
-  );
 
   return (
     <div className={styles.container}>
@@ -76,106 +77,154 @@ const Home = (props) => {
           <Navbar addProject={() => setShowForm(true)} />
         </div>
         <div className={styles.main}>
-          <h1>
-            Welcome back, <span>{user.email}</span>
-          </h1>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <h1>
+              Welcome back, <span>{user.email}</span>
+            </h1>
+            <div
+              style={{
+                width: "3rem",
+                height: "2rem",
+                padding: "5px 1rem",
+                color: "white",
+                backgroundColor: "#2f3539",
+                marginTop: "1.5rem",
+                borderRadius: 5,
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                localStorage.removeItem("x-authorization-token");
+                history.push("/login");
+              }}
+            >
+              Logout
+            </div>
+          </div>
           <div className={styles.separator}></div>
 
           <div className={styles.recentSection}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h2>Newly Added Projects</h2>
-              <button className={styles.btn}>View all</button>
+              {latestProjects.length ? (
+                <button
+                  className={styles.btn}
+                  onClick={() => {
+                    history.push("/projects");
+                  }}
+                >
+                  View all
+                </button>
+              ) : (
+                []
+              )}
             </div>
             <div style={{ display: "flex", marginTop: -20 }}>
-              {latestProjects
-                ? latestProjects.map((project) => {
-                    const month =
-                      monthNames[new Date(project.dueDate).getMonth()];
-                    const date = new Date(project.dueDate).getDate();
-                    const year = new Date(project.dueDate).getFullYear();
-                    return (
-                      <div
-                        key={project._id}
-                        className={styles.card}
-                        style={{ marginRight: "2rem" }}
-                        onClick={() => {
-                          setShowProject(true);
-                          setCurrentProject(project);
-                        }}
-                      >
-                        <div className={styles.logo}>
-                          <p>{project.title[0].toUpperCase()}</p>
-                        </div>
-                        <div className={styles.cardContent}>
-                          <p className={styles.title}>
-                            {project.title.toUpperCase()}
-                          </p>
-                          <p style={{ color: "gray" }}>
-                            {/* <span style={{ color: "#3862df" }}>21 tasks</span> |{" "} */}
-                            <span style={{ color: "#ec5858" }}>
-                              {date} {month} {year}
-                            </span>
-                          </p>
-                          <p
-                            style={{
-                              fontSize: "1.1rem",
-                              marginTop: "0.8rem",
-                              fontWeight: 700,
-                              color: "gray",
-                            }}
-                          >
-                            Members
-                          </p>
-                          <div style={{ display: "flex" }}>
-                            {project.members.length > 3 ? (
-                              <>
-                                {project.members.map((m, index) => {
-                                  if (index < 3) {
-                                    return (
-                                      <div
-                                        className={styles.user}
-                                        style={{ backgroundColor: "red" }}
-                                      >
-                                        <p>{m[0].toUpperCase()}</p>
-                                      </div>
-                                    );
-                                  }
-                                })}
+              {latestProjects.length > 0 ? (
+                latestProjects.map((project) => {
+                  const month =
+                    monthNames[new Date(project.dueDate).getMonth()];
+                  const date = new Date(project.dueDate).getDate();
+                  const year = new Date(project.dueDate).getFullYear();
+                  return (
+                    <div
+                      key={project._id}
+                      className={styles.card}
+                      style={{ marginRight: "2rem" }}
+                      onClick={() => {
+                        setShowProject(true);
+                        setCurrentProject(project);
+                      }}
+                    >
+                      <div className={styles.logo}>
+                        <p>{project.title[0].toUpperCase()}</p>
+                      </div>
+                      <div className={styles.cardContent}>
+                        <p className={styles.title}>
+                          {project.title.toUpperCase()}
+                        </p>
+                        <p style={{ color: "gray" }}>
+                          {/* <span style={{ color: "#3862df" }}>21 tasks</span> |{" "} */}
+                          <span style={{ color: "#ec5858" }}>
+                            {date} {month} {year}
+                          </span>
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "1.1rem",
+                            marginTop: "0.8rem",
+                            fontWeight: 700,
+                            color: "gray",
+                          }}
+                        >
+                          Members
+                        </p>
+                        <div style={{ display: "flex" }}>
+                          {project.members.length > 3 ? (
+                            <>
+                              {project.members.map((m, index) => {
+                                if (index < 3) {
+                                  return (
+                                    <div
+                                      className={styles.user}
+                                      style={{ backgroundColor: "red" }}
+                                    >
+                                      <p>{m[0].toUpperCase()}</p>
+                                    </div>
+                                  );
+                                }
+                              })}
 
-                                <div
-                                  className={styles.user}
-                                  style={{ backgroundColor: "red" }}
-                                >
-                                  <p>+{project.members.length - 3}</p>
-                                </div>
-                              </>
-                            ) : project.members.length ? (
-                              project.members.map((m) => (
-                                <div
-                                  style={{ backgroundColor: "green" }}
-                                  className={styles.user}
-                                >
-                                  <p>{m[0].toUpperCase()}</p>
-                                </div>
-                              ))
-                            ) : (
-                              <p>No members are added.</p>
-                            )}
-                          </div>
+                              <div
+                                className={styles.user}
+                                style={{ backgroundColor: "red" }}
+                              >
+                                <p>+{project.members.length - 3}</p>
+                              </div>
+                            </>
+                          ) : project.members.length ? (
+                            project.members.map((m) => (
+                              <div
+                                style={{ backgroundColor: "green" }}
+                                className={styles.user}
+                              >
+                                <p>{m[0].toUpperCase()}</p>
+                              </div>
+                            ))
+                          ) : (
+                            <p>No members are added.</p>
+                          )}
                         </div>
                       </div>
-                    );
-                  })
-                : []}
+                    </div>
+                  );
+                })
+              ) : (
+                <h2 style={{ marginTop: "4rem", marginLeft: "2rem" }}>
+                  Recently no projects are added
+                </h2>
+              )}
             </div>
           </div>
           <div className={styles.prioritySection}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h2>Priority projects</h2>
-              <button className={styles.btn}>View all</button>
+              {priorityProjects.length ? (
+                <button
+                  className={styles.btn}
+                  onClick={() => {
+                    history.push("/projects");
+                  }}
+                >
+                  View all
+                </button>
+              ) : (
+                []
+              )}
             </div>
             <div style={{ display: "flex", marginTop: -20 }}>
-              {priorityProjects &&
+              {priorityProjects.length ? (
                 priorityProjects.map((p) => {
                   const currentDate = new Date();
                   const dueDate = new Date(p.dueDate);
@@ -220,7 +269,13 @@ const Home = (props) => {
                       </div>
                     </div>
                   );
-                })}
+                })
+              ) : (
+                <h2 style={{ marginTop: "4rem", marginLeft: "2rem" }}>
+                  There is no project with{" "}
+                  <span style={{ color: "red" }}>urgent</span> deadline
+                </h2>
+              )}
             </div>
           </div>
         </div>
@@ -245,6 +300,7 @@ const Home = (props) => {
                 close={() => {
                   setShowProject(false);
                 }}
+                creator={user.email === currentProject.creator}
                 update={() => {}}
                 project={currentProject}
               />

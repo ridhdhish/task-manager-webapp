@@ -27,7 +27,7 @@ const Signup = (props) => {
 
   useEffect(() => {
     console.log(auth.user.email);
-    if (auth.user.email) {
+    if (auth.user.email && localStorage.getItem("x-authorization-token")) {
       history.push("/");
     }
   }, [auth.user]);

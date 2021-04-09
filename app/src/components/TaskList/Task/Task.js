@@ -22,7 +22,21 @@ export default function Task(props) {
     props.deleteTask(id);
   };
 
-  const completeTaskHandler = async (id) => {};
+  const completeTaskHandler = async (id) => {
+    const response = await fetch("http://localhost:3000/api/task/" + id, {
+      method: "PUT",
+      cache: "no-cache",
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+        "x-authorization-token": token,
+      },
+      body: JSON.stringify({ id }),
+    });
+
+    const data = await response.json();
+    props.updateTask(id, data.task);
+  };
 
   return (
     <div>

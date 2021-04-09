@@ -123,9 +123,6 @@ module.exports.deleteAllProject = async (req, res) => {};
 */
 module.exports.getAllProject = async (req, res) => {
   try {
-    const { projects } = await User.findById(req.user._id);
-    const allProjects = [];
-
     if (req.query.limit) {
       const projects = await Project.find({
         members: { $in: [req.user.email] },
@@ -135,13 +132,18 @@ module.exports.getAllProject = async (req, res) => {
       return res.status(200).json({ projects });
     }
 
+    const projects = await Project.find({
+      members: { $in: [req.user.email] },
+    });
+
+    res.status(200).json({ projects });
+
     // await Promise.all(
     //   projects.map(async (id) => {
     //     const project = await Project.findById(id);
     //     allProjects.push(project);
     //   })
     // );
-    res.status(200).json({ allProjects });
   } catch (err) {
     console.log(err);
   }

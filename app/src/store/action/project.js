@@ -4,6 +4,7 @@ import {
   SET_LATEST_PROJECT,
   UPDATE_PRIORITY_PROJECT,
   UPDATE_RECENT_PROJECT,
+  SET_ALL_PROJECT,
 } from "../types";
 import { getToken } from "../../utils/getToken";
 
@@ -88,5 +89,29 @@ export const updateRecentProject = (project) => (dispatch, getState) => {
   dispatch({
     type: UPDATE_RECENT_PROJECT,
     payload: project,
+  });
+};
+
+export const setAllProject = () => async (dispatch, getState) => {
+  const token = getToken();
+  const response = await fetch(
+    "http://localhost:3000/api/project/getAllProject",
+    {
+      method: "GET",
+      cache: "no-cache",
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+        "x-authorization-token": token,
+      },
+    }
+  );
+
+  const data = await response.json();
+  console.log(data.projects);
+
+  dispatch({
+    type: SET_ALL_PROJECT,
+    payload: data.projects,
   });
 };

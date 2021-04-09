@@ -15,6 +15,7 @@ import { login } from "../../store/action/auth";
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isValid, setIsValid] = useState(true);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -23,16 +24,21 @@ const Login = (props) => {
 
   useEffect(() => {
     console.log(auth.user.email);
-    if (auth.user.email) {
+    if (auth.user.email && localStorage.getItem("x-authorization-token")) {
       history.push("/");
     }
   }, [auth.user]);
 
   const loginHandler = async () => {
+    setIsValid(true);
+    setEmail("");
+    setPassword("");
     await dispatch(login({ email, password }));
     const token = localStorage.getItem("x-authorization-token");
     if (token) {
       history.push("/");
+    } else {
+      setIsValid(false);
     }
   };
 
@@ -51,6 +57,13 @@ const Login = (props) => {
       <img src={BackSvg} alt="wave" />
       <div className={styles.App}>
         <div className={styles.Container}>
+          {isValid === false ? (
+            <h1 style={{ fontSize: "1rem", color: "red" }}>
+              Invalid Credentials!
+            </h1>
+          ) : (
+            []
+          )}
           <h1>Welcome back!</h1>
           <form>
             <div>
@@ -65,6 +78,7 @@ const Login = (props) => {
                   placeholder="Enter your email"
                   autoComplete="off"
                   required
+                  value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
@@ -82,6 +96,7 @@ const Login = (props) => {
                   name="password"
                   placeholder="Enter your password"
                   required
+                  value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}

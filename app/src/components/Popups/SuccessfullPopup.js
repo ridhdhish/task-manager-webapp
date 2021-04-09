@@ -3,6 +3,7 @@ import React from "react";
 const SuccessfullPopup = (props) => {
   const onCloseHandler = () => {
     props.onclick();
+    window.location.reload();
   };
 
   return (

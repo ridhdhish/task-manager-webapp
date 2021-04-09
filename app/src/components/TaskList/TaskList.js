@@ -109,6 +109,17 @@ export default function TaskList(props) {
     console.log(data);
   };
 
+  const updateTaskHandler = async (id, task) => {
+    const taskIndex = tasks.findIndex((task) => {
+      return id === task._id;
+    });
+
+    const newTasks = [...tasks];
+    newTasks[taskIndex] = task;
+
+    setTasks(newTasks);
+  };
+
   return (
     <div
       className="container"
@@ -165,8 +176,9 @@ export default function TaskList(props) {
               <Task
                 task={task}
                 key={task._id}
-                creator={user._id === props.project.creator}
+                creator={user.email === props.project.creator}
                 deleteTask={deleteTaskHandler}
+                updateTask={updateTaskHandler}
               />
             ))}
           </>

@@ -4,6 +4,7 @@ import {
   SET_LATEST_PROJECT,
   UPDATE_PRIORITY_PROJECT,
   UPDATE_RECENT_PROJECT,
+  SET_ALL_PROJECT,
 } from "../types";
 
 const initialState = {
@@ -22,6 +23,13 @@ const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         projects: newProjects,
+      };
+    }
+    case SET_ALL_PROJECT: {
+      console.log(payload);
+      return {
+        ...state,
+        projects: payload,
       };
     }
     case SET_PRIORITY_PROJECT: {

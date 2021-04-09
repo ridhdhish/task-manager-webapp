@@ -130,38 +130,45 @@ export default function ViewProject(props) {
             <UserLogo color="5c6066" char="+3" /> */}
           </div>
         </div>
-        <input
-          type="text"
-          placeholder="Enter email of new member"
-          style={{
-            borderBottom: "1px solid #000",
-            width: "15rem",
-            display: "block",
-          }}
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-        <button
-          style={{
-            backgroundColor: "green",
-            width: 100,
-            height: 40,
-            fontSize: 14,
-            color: "white",
-            marginTop: "1rem",
-          }}
-          onClick={(e) => {
-            if (validator.isEmail(email)) {
-              setErr(false);
-              addMemberHandler(project._id);
-              setEmail("");
-            } else {
-              setErr(true);
-            }
-          }}
-        >
-          Add Member
-        </button>
+        {props.creator ? (
+          <>
+            <input
+              type="text"
+              placeholder="Enter email of new member"
+              style={{
+                borderBottom: "1px solid #000",
+                width: "15rem",
+                display: "block",
+              }}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
+            <button
+              style={{
+                backgroundColor: "green",
+                width: 100,
+                height: 40,
+                fontSize: 14,
+                color: "white",
+                marginTop: "1rem",
+              }}
+              onClick={(e) => {
+                if (validator.isEmail(email)) {
+                  setErr(false);
+                  addMemberHandler(project._id);
+                  setEmail("");
+                } else {
+                  setErr(true);
+                }
+              }}
+            >
+              Add Member
+            </button>
+          </>
+        ) : (
+          []
+        )}
+
         {err ? (
           <div
             style={{

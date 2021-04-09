@@ -85,11 +85,12 @@ module.exports.updateTask = async (req, res) => {
       return sendResponse(res, "Unable to update task", 404);
     }
 
-    const { title, description, dueDate } = req.body;
+    const { title, description, dueDate, id } = req.body;
 
     if (title) task.title = title;
     if (description) task.description = description;
     if (dueDate) task.dueDate = dueDate;
+    if (id) task.completed = true;
 
     await task.save();
 
