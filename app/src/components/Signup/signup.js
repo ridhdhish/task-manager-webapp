@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./signup.module.css";
 
 import BackSvg from "../../utils/wave.svg";
@@ -8,7 +8,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faLock } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { signup } from "../../store/action/auth";
 
@@ -22,6 +22,15 @@ const Signup = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const auth = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    console.log(auth.user.email);
+    if (auth.user.email) {
+      history.push("/");
+    }
+  }, [auth.user]);
 
   const signupHandler = async () => {
     if (user.password.length < 6) {

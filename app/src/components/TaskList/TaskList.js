@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Task from "./Task/Task";
 import NewTask from "./NewTask/NewTask";
@@ -10,6 +10,8 @@ import "./TaskList.css";
 import { HiPlus } from "react-icons/hi";
 
 export default function TaskList(props) {
+  const dispatch = useDispatch();
+
   const [scroll, setScroll] = useState({ overflow: "hidden" });
   const [tasks, setTasks] = useState([]);
   const [addNewTask, setAddNewTask] = useState(false);
@@ -47,9 +49,8 @@ export default function TaskList(props) {
 
   const addTaskHandler = async (newTask) => {
     setAddNewTask(false);
-    console.log(newTask);
 
-    const response = await fetch("http://localhost:3000/api/task/create", {
+    let response = await fetch("http://localhost:3000/api/task/create", {
       method: "POST",
       cache: "no-cache",
       mode: "cors",
@@ -60,15 +61,27 @@ export default function TaskList(props) {
       body: JSON.stringify({ projectId: props.project._id, ...newTask }),
     });
 
-    const data = await response.json();
-    console.log(data);
-    const newTasks = [...tasks];
+    let data = await response.json();
+    let newTasks = [...tasks];
     newTasks.push(data.task);
     setTasks(newTasks);
-    console.log(tasks);
+
+    response = await fetch("http://localhost:3000/api/project/update/add", {
+      method: "PUT",
+      cache: "no-cache",
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+        "x-authorization-token": token,
+      },
+      body: JSON.stringify({ projectId: props.project._id }),
+    });
+
+    data = await response.json();
+    console.log(data);
   };
 
-  const deleteTaskHandler = (id) => {
+  const deleteTaskHandler = async (id) => {
     const taskIndex = tasks.findIndex((task) => {
       return id === task._id;
     });
@@ -77,6 +90,23 @@ export default function TaskList(props) {
     newTasks.splice(taskIndex, 1);
 
     setTasks(newTasks);
+
+    const response = await fetch(
+      "http://localhost:3000/api/project/update/delete",
+      {
+        method: "PUT",
+        cache: "no-cache",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+          "x-authorization-token": token,
+        },
+        body: JSON.stringify({ projectId: props.project._id }),
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
   };
 
   return (

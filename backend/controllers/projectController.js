@@ -176,3 +176,31 @@ module.exports.getLatestProject = async (req, res) => {
     console.log(err);
   }
 };
+
+/*
+    Route: GET /project/update/:task
+    Description: Update project details
+*/
+module.exports.updateProject = async (req, res) => {
+  try {
+    console.log(req.params);
+    const project = await Project.findById(req.body.projectId);
+    if (!project) {
+      return res.status(404).send({ err: "Cannot find project to update" });
+    }
+    if (req.params.task === "add") {
+      project.tasks = project.tasks + 1;
+      project.save();
+
+      return res.status(200).json({ project });
+    }
+
+    project.tasks = project.tasks - 1;
+    project.save();
+
+    res.status(200).json({ project });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err });
+  }
+};

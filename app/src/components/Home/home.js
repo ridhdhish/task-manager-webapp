@@ -83,7 +83,7 @@ const Home = (props) => {
 
           <div className={styles.recentSection}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h2>Latest Added Projects</h2>
+              <h2>Newly Added Projects</h2>
               <button className={styles.btn}>View all</button>
             </div>
             <div style={{ display: "flex", marginTop: -20 }}>
@@ -97,6 +97,10 @@ const Home = (props) => {
                       <div
                         className={styles.card}
                         style={{ marginRight: "2rem" }}
+                        onClick={() => {
+                          setShowProject(true);
+                          setCurrentProject(project);
+                        }}
                       >
                         <div className={styles.logo}>
                           <p>{project.title[0].toUpperCase()}</p>
@@ -106,7 +110,7 @@ const Home = (props) => {
                             {project.title.toUpperCase()}
                           </p>
                           <p style={{ color: "gray" }}>
-                            <span style={{ color: "#3862df" }}>21 tasks</span> |{" "}
+                            {/* <span style={{ color: "#3862df" }}>21 tasks</span> |{" "} */}
                             <span style={{ color: "#ec5858" }}>
                               {date} {month} {year}
                             </span>
@@ -187,11 +191,9 @@ const Home = (props) => {
                       }}
                     >
                       <p className={styles.pTitle}>{p.title}</p>
-                      <p className={styles.pDescription}>
-                        {p.description} Hello bratha, hey sista, buy 1 skirt and
-                      </p>
+                      <p className={styles.pDescription}>{p.description}</p>
                       <div>
-                        <div
+                        {/* <div
                           style={{
                             display: "flex",
                             color: "#efefee",
@@ -202,7 +204,7 @@ const Home = (props) => {
                           <p style={{ marginLeft: "0.5rem" }}>
                             {p.tasks.length} Tasks
                           </p>
-                        </div>
+                        </div> */}
                         <div style={{ display: "flex", color: "#efefee" }}>
                           <RiTimerLine size={"1.3rem"} />
                           <p style={{ marginLeft: "0.5rem" }}>
@@ -210,7 +212,9 @@ const Home = (props) => {
                           </p>
                         </div>
                         <p style={{ color: "#ff0000", fontWeight: 700 }}>
-                          02/09/2021
+                          {new Date(p.dueDate).getDate()}/
+                          {new Date(p.dueDate).getMonth()}/
+                          {new Date(p.dueDate).getFullYear()}
                         </p>
                       </div>
                     </div>

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./login.module.css";
 
 import BackSvg from "../../utils/wave.svg";
 import Logo from "../../utils/logo.png";
 
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faLock } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +18,15 @@ const Login = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const auth = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    console.log(auth.user.email);
+    if (auth.user.email) {
+      history.push("/");
+    }
+  }, [auth.user]);
 
   const loginHandler = async () => {
     await dispatch(login({ email, password }));

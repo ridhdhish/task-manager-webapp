@@ -62,13 +62,36 @@ export default function ViewProject(props) {
               wordWrap: "break-word",
             }}
           >
-            <UserLogo color="FF0000" char="R" />
+            {props.project.members ? (
+              props.project.members.length > 6 ? (
+                <>
+                  {props.project.members.map((m, index) => {
+                    if (index < 7) {
+                      return (
+                        <UserLogo color="FF0000" char={m[0].toUpperCase()} />
+                      );
+                    }
+                  })}
+                  <UserLogo
+                    color="5c6066"
+                    char={props.project.members.length - 6}
+                  />
+                </>
+              ) : (
+                props.project.members.map((m, index) => {
+                  return <UserLogo color="FF0000" char={m[0].toUpperCase()} />;
+                })
+              )
+            ) : (
+              <p>No members are added yet!</p>
+            )}
+            {/* <UserLogo color="FF0000" char="R" />
             <UserLogo color="DAA211" char="M" />
             <UserLogo color="001AFF" char="J" />
             <UserLogo color="5DB916" char="S" />
             <UserLogo color="FF0000" char="R" />
             <UserLogo color="DAA211" char="M" />
-            <UserLogo color="5c6066" char="+3" />
+            <UserLogo color="5c6066" char="+3" /> */}
           </div>
         </div>
         <button

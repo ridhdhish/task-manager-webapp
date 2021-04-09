@@ -14,8 +14,8 @@ const projectSchema = new mongoose.Schema({
     default: [],
   },
   tasks: {
-    type: [],
-    default: [],
+    type: Number,
+    default: 0,
   },
   dueDate: {
     type: Date,

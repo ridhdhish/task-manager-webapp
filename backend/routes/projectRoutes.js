@@ -26,5 +26,10 @@ router.get(
   authMiddleware,
   projectController.getLatestProject
 );
+router.put(
+  "/project/update/:task",
+  authMiddleware,
+  projectController.updateProject
+);
 
 module.exports = router;
