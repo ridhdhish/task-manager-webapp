@@ -3,6 +3,8 @@ import styles from "./navbar.module.css";
 import { IoHomeOutline, IoList } from "react-icons/io5";
 import { MdTimeline, MdDashboard, MdAdd } from "react-icons/md";
 
+import { Link } from "react-router-dom";
+
 import user from "../../assets/user2.png";
 
 const navbar = (props) => {
@@ -15,15 +17,15 @@ const navbar = (props) => {
             <div className={styles.separator}></div>
           </div>
           <div className={styles.headerLink}>
-            <a className={styles.active} href="#dashboard">
+            <Link className={styles.active} to="/">
               <IoHomeOutline color="#ec5858" size="1.2rem" />
-            </a>
-            <a href="#dashboard">
+            </Link>
+            <Link to="/projects">
               <IoList color="white" size="1.5rem" />
-            </a>
-            <a href="#dashboard">
+            </Link>
+            <Link to="/">
               <MdTimeline color="white" size="1.5rem" />
-            </a>
+            </Link>
           </div>
         </div>
         <div className={styles.navLower}>

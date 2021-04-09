@@ -2,6 +2,7 @@ import "./App.css";
 import Login from "./components/Login/login";
 import Signup from "./components/Signup/signup";
 import Home from "./components/Home/home";
+import AllProjects from "./components/AllProjects/AllProjects";
 
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -62,6 +63,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <Signup />
+          </Route>
+          <Route path="/projects">
+            <AllProjects />
           </Route>
           <Route path="/">
             <Home />
