@@ -62,7 +62,7 @@ const Home = (props) => {
         <div>
           <div
             onClick={() => {
-              setShowForm(false);
+              //setShowForm(false);
             }}
             className={styles.formContainer}
           ></div>
@@ -285,7 +285,7 @@ const Home = (props) => {
           <>
             <div
               onClick={() => {
-                setShowProject(false);
+                //setShowProject(false);
               }}
               style={{
                 position: "absolute",
