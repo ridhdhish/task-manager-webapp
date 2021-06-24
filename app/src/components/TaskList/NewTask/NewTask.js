@@ -44,15 +44,26 @@ export default function NewTask(props) {
             name="dueDate"
             onChange={(e) => setTask({ ...task, dueDate: e.target.value })}
           />
-          <button
-            className="new-task-btn"
-            style={{ backgroundColor: "cyan" }}
-            onClick={() => {
-              addTaskHandler();
-            }}
-          >
-            Save
-          </button>
+          <div>
+            <button
+              className="new-task-btn"
+              style={{ backgroundColor: "#007FFF" }}
+              onClick={() => {
+                addTaskHandler();
+              }}
+            >
+              Save
+            </button>
+            <button
+              className="new-task-btn"
+              style={{ backgroundColor: "red" }}
+              onClick={() => {
+                props.closeTask(false)
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>

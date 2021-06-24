@@ -79,6 +79,7 @@ const ProjectForm = (props) => {
             <p>Priority*</p>
             <input
               type="text"
+              list="priority"
               autoComplete="off"
               required
               name="priority"
@@ -87,6 +88,11 @@ const ProjectForm = (props) => {
                 setProject({ ...project, priority: e.target.value });
               }}
             />
+            <datalist id="priority">
+              <option value="Normal"></option>
+              <option value="High"></option>
+              <option value="Urgent"></option>
+            </datalist>
           </div>
 
           <div

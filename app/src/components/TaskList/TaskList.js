@@ -124,7 +124,7 @@ export default function TaskList(props) {
     <div
       className="container"
       onClick={() => {
-        setAddNewTask(false);
+        //setAddNewTask(false);
       }}
     >
       <div className="title">
@@ -169,7 +169,7 @@ export default function TaskList(props) {
           setScroll({ overflow: "hidden" });
         }}
       >
-        {addNewTask && <NewTask addTask={addTaskHandler} />}
+        {addNewTask && <NewTask addTask={addTaskHandler} closeTask={setAddNewTask} />}
         {tasks.length ? (
           <>
             {tasks.map((task) => (
