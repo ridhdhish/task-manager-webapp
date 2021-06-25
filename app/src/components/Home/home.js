@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/navbar";
 import styles from "./home.module.css";
 
-import { IoMdNotifications, IoMdNotificationsOutline } from "react-icons/io";
 import { RiTimerLine } from "react-icons/ri";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -18,12 +17,16 @@ import { differenceInDays } from "date-fns";
 import ViewProject from "../ViewProject/ViewProject";
 import TaskList from "../TaskList/TaskList";
 import Invite from "../Invite/Invite";
+import { getToken } from "../../utils/getToken";
 
 const Home = (props) => {
   const [showForm, setShowForm] = useState(false);
-  const [showInvite, setShowInvite] = useState(true);
+  const [showInvite, setShowInvite] = useState(false);
+  const [invites, setInvites] = useState([]);
   const [showProject, setShowProject] = useState(false);
   const [currentProject, setCurrentProject] = useState({});
+
+  const token = getToken();
 
   const monthNames = [
     "jan",
@@ -53,6 +56,20 @@ const Home = (props) => {
     const getPriorityProject = async () => {
       await dispatch(setPriorityProjects());
       await dispatch(setRecentProjects());
+
+      const response = await fetch("http://localhost:3000/api/invite", {
+        method: "GET",
+        cache: "no-cache",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+          "x-authorization-token": token,
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setInvites(() => data.invites);
     };
 
     getPriorityProject();
@@ -60,7 +77,7 @@ const Home = (props) => {
 
   return (
     <div className={styles.container}>
-      {showInvite ? <Invite /> : []}
+      {showInvite ? <Invite user={user} invites={invites} /> : []}
       {showForm ? (
         <div>
           <div
@@ -100,11 +117,12 @@ const Home = (props) => {
                 }}
                 onClick={(e) => {
                   setShowInvite(!showInvite);
+                  e.stopPropagation();
                 }}
               >
                 <p className={styles.invite}>Invites</p>
                 <div className={styles.inviteCount}>
-                  <p>12</p>
+                  <p>{invites.length}</p>
                 </div>
               </div>
               <div

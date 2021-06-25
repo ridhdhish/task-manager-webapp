@@ -6,5 +6,6 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 router.post("/invite", authMiddleware, inviteController.sentInvite);
 router.get("/invite", authMiddleware, inviteController.getAllInvites);
+router.delete("/invite", authMiddleware, inviteController.deleteInvite);
 
 module.exports = router;

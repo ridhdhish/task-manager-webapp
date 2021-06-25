@@ -26,6 +26,7 @@ module.exports.login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
+    console.log(user);
     if (user) {
       const isValid = await bcrypt.compare(password, user.password);
 

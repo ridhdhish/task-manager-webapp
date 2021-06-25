@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import validator from "validator";
-import { useDispatch } from "react-redux";
 
 import "./ViewProject.css";
 import UserLogo from "../UserLogo/UserLogo";
@@ -8,10 +7,6 @@ import UserLogo from "../UserLogo/UserLogo";
 import { getToken } from "../../utils/getToken";
 
 import { BsArrowLeftShort } from "react-icons/bs";
-import {
-  updatePriorityProject,
-  updateRecentProject,
-} from "../../store/action/project";
 
 export default function ViewProject(props) {
   const [err, setErr] = useState(false);
@@ -19,37 +14,33 @@ export default function ViewProject(props) {
   const [email, setEmail] = useState("");
   const [project, setProject] = useState(props.project);
 
-  const dispatch = useDispatch();
-
   const token = getToken();
 
-  const addMemberHandler = async (projectId) => {
+  const addMemberHandler = async (projectId, title) => {
     console.log(projectId);
-    const response = await fetch(
-      "http://localhost:3000/api/project/addMember",
-      {
-        method: "POST",
-        cache: "no-cache",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-          "x-authorization-token": token,
-        },
-        body: JSON.stringify({ projectId, email }),
-      }
-    );
+    const response = await fetch("http://localhost:3000/api/invite", {
+      method: "POST",
+      cache: "no-cache",
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+        "x-authorization-token": token,
+      },
+      body: JSON.stringify({ projectId, email, projectTitle: title }),
+    });
 
     const data = await response.json();
     console.log(data);
 
     if (data.err) {
       setEmailError(data.err);
-    } else {
-      setEmailError("");
-      dispatch(updatePriorityProject(data.project));
-      dispatch(updateRecentProject(data.project));
-      setProject(data.project);
     }
+    // } else {
+    //   setEmailError("");
+    //   dispatch(updatePriorityProject(data.project));
+    //   dispatch(updateRecentProject(data.project));
+    //   setProject(data.project);
+    // }
   };
 
   return (
@@ -192,7 +183,7 @@ export default function ViewProject(props) {
               onClick={(e) => {
                 if (validator.isEmail(email)) {
                   setErr(false);
-                  addMemberHandler(project._id);
+                  addMemberHandler(project._id, project.title);
                   setEmail("");
                 } else {
                   setErr(true);

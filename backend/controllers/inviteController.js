@@ -20,8 +20,22 @@ module.exports.sentInvite = async (req, res) => {
 module.exports.getAllInvites = async (req, res) => {
   try {
     const invites = await Invite.find({ email: req.user.email });
-    console.log(invites);
     res.status(200).json({ invites });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+/* 
+  Route: DELETE /invite
+  Description: Reject invite
+*/
+module.exports.deleteInvite = async (req, res) => {
+  console.log(req);
+  try {
+    const invite = await Invite.findByIdAndDelete(req.body.projectId);
+    console.log(invite);
+    res.status(200).json({ invite });
   } catch (err) {
     console.log(err);
   }

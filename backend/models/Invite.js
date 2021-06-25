@@ -9,6 +9,10 @@ const inviteSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
+  projectTitle: {
+    type: String,
+    required: true,
+  },
 });
 
 const Invite = mongoose.model("Invite", inviteSchema);
