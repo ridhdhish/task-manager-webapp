@@ -49,8 +49,16 @@ module.exports.createProject = async (req, res) => {
 module.exports.addMember = async (req, res) => {
   const { projectId, email } = req.body;
   // const { email, username } = req.user;
-
+  console.log(email);
   try {
+    const user = await User.findOne({ email });
+    console.log(user);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ err: "User with entered email address not found" });
+    }
+
     const project = await Project.findById(projectId);
 
     if (!project) {

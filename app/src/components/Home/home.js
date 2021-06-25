@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/navbar";
 import styles from "./home.module.css";
 
-import { FaRegFolderOpen } from "react-icons/fa";
+import { IoMdNotifications, IoMdNotificationsOutline } from "react-icons/io";
 import { RiTimerLine } from "react-icons/ri";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -17,9 +17,11 @@ import {
 import { differenceInDays } from "date-fns";
 import ViewProject from "../ViewProject/ViewProject";
 import TaskList from "../TaskList/TaskList";
+import Invite from "../Invite/Invite";
 
 const Home = (props) => {
   const [showForm, setShowForm] = useState(false);
+  const [showInvite, setShowInvite] = useState(true);
   const [showProject, setShowProject] = useState(false);
   const [currentProject, setCurrentProject] = useState({});
 
@@ -58,6 +60,7 @@ const Home = (props) => {
 
   return (
     <div className={styles.container}>
+      {showInvite ? <Invite /> : []}
       {showForm ? (
         <div>
           <div
@@ -78,28 +81,52 @@ const Home = (props) => {
         </div>
         <div className={styles.main}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <h1>
-              Welcome back, <span>{user.email}</span>
-            </h1>
-            <div
-              style={{
-                width: "3rem",
-                height: "2rem",
-                padding: "5px 1rem",
-                color: "white",
-                backgroundColor: "#2f3539",
-                marginTop: "1.5rem",
-                borderRadius: 5,
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                localStorage.removeItem("x-authorization-token");
-                history.push("/login");
-              }}
-            >
-              Logout
+            <div style={{ display: "flex" }}>
+              <h1>
+                Welcome back, <span>{user.email}</span>
+              </h1>
+              {/* <IoMdNotificationsOutline
+                size={25}
+                style={{ marginLeft: "1rem" }}
+              /> */}
+            </div>
+            <div style={{ display: "flex" }}>
+              <div
+                style={{
+                  marginRight: "2rem",
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+                onClick={(e) => {
+                  setShowInvite(!showInvite);
+                }}
+              >
+                <p className={styles.invite}>Invites</p>
+                <div className={styles.inviteCount}>
+                  <p>12</p>
+                </div>
+              </div>
+              <div
+                style={{
+                  width: "3rem",
+                  height: "2rem",
+                  padding: "5px 1rem",
+                  color: "white",
+                  backgroundColor: "#2f3539",
+                  marginTop: "-1rem",
+                  borderRadius: 5,
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  localStorage.removeItem("x-authorization-token");
+                  history.push("/login");
+                }}
+              >
+                Logout
+              </div>
             </div>
           </div>
           <div className={styles.separator}></div>
@@ -167,6 +194,7 @@ const Home = (props) => {
                                 if (index < 3) {
                                   return (
                                     <div
+                                      key={index}
                                       className={styles.user}
                                       style={{ backgroundColor: "red" }}
                                     >
@@ -184,8 +212,9 @@ const Home = (props) => {
                               </div>
                             </>
                           ) : project.members.length ? (
-                            project.members.map((m) => (
+                            project.members.map((m, index) => (
                               <div
+                                key={index}
                                 style={{ backgroundColor: "green" }}
                                 className={styles.user}
                               >

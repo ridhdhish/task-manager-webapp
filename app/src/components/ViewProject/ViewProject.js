@@ -15,6 +15,7 @@ import {
 
 export default function ViewProject(props) {
   const [err, setErr] = useState(false);
+  const [emailError, setEmailError] = useState("");
   const [email, setEmail] = useState("");
   const [project, setProject] = useState(props.project);
 
@@ -41,9 +42,14 @@ export default function ViewProject(props) {
     const data = await response.json();
     console.log(data);
 
-    dispatch(updatePriorityProject(data.project));
-    dispatch(updateRecentProject(data.project));
-    setProject(data.project);
+    if (data.err) {
+      setEmailError(data.err);
+    } else {
+      setEmailError("");
+      dispatch(updatePriorityProject(data.project));
+      dispatch(updateRecentProject(data.project));
+      setProject(data.project);
+    }
   };
 
   return (
@@ -107,15 +113,29 @@ export default function ViewProject(props) {
                   {project.members.map((m, index) => {
                     if (index < 7) {
                       return (
-                        <UserLogo color="FF0000" char={m[0].toUpperCase()} />
+                        <UserLogo
+                          key={index}
+                          color="FF0000"
+                          char={m[0].toUpperCase()}
+                        />
                       );
                     }
                   })}
-                  <UserLogo color="5c6066" char={project.members.length - 6} />
+                  <UserLogo
+                    key={project.members.length}
+                    color="5c6066"
+                    char={project.members.length - 6}
+                  />
                 </>
               ) : (
                 project.members.map((m, index) => {
-                  return <UserLogo color="FF0000" char={m[0].toUpperCase()} />;
+                  return (
+                    <UserLogo
+                      key={index}
+                      color="FF0000"
+                      char={m[0].toUpperCase()}
+                    />
+                  );
                 })
               )
             ) : (
@@ -143,6 +163,23 @@ export default function ViewProject(props) {
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
+            {err ? (
+              <div
+                style={{
+                  width: "15rem",
+                  padding: 10,
+                  border: "1px solid red",
+                  borderRadius: "5px",
+                  marginTop: -10,
+                }}
+              >
+                <p className="error">Email is invalid!</p>
+              </div>
+            ) : emailError !== "" ? (
+              <p className="error">{emailError}</p>
+            ) : (
+              []
+            )}
             <button
               style={{
                 backgroundColor: "green",
@@ -165,22 +202,6 @@ export default function ViewProject(props) {
               Add Member
             </button>
           </>
-        ) : (
-          []
-        )}
-
-        {err ? (
-          <div
-            style={{
-              width: "15rem",
-              padding: 10,
-              border: "1px solid red",
-              borderRadius: "5px",
-              marginTop: -10,
-            }}
-          >
-            <p style={{ color: "red" }}>Email is invalid!</p>
-          </div>
         ) : (
           []
         )}

@@ -1,0 +1,46 @@
+.invite-container {
+  position: absolute;
+  z-index: 2;
+  width: 15rem;
+  height: 18rem;
+  background-color: rgb(49, 38, 38);
+  margin-left: 72rem;
+  margin-top: 4.5rem;
+  border-radius: 5px;
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.invite-card {
+  display: flex;
+  width: 12rem;
+  padding: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.invite-card .profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: blue;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.approval-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
