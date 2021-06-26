@@ -81,6 +81,11 @@
 .title {
   font-size: 1.4rem;
   font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 10rem;
+  margin-bottom: 5px;
 }
 
 .cardContent span {

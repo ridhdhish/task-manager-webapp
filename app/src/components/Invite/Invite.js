@@ -4,12 +4,30 @@ import "./Invite.css";
 import { IoCheckmarkSharp, IoCloseSharp } from "react-icons/io5";
 import { getToken } from "../../utils/getToken";
 
+const deleteInviteHandler = async (token, projectId) => {
+  const response = await fetch("http://localhost:3000/api/invite", {
+    method: "DELETE",
+    cache: "no-cache",
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      "x-authorization-token": token,
+    },
+    body: JSON.stringify({ projectId }),
+  });
+
+  const data = await response.json();
+  console.log(data);
+
+  return data;
+};
+
 export default function Invite(props) {
   const [invites, setInvites] = useState([...props.invites]);
 
   const token = getToken();
 
-  const inviteHandler = async (result, projectId) => {
+  const inviteHandler = async (result, projectId, id) => {
     if (result === "accept") {
       // Call add member api call in project controller
       const response = await fetch(
@@ -27,7 +45,14 @@ export default function Invite(props) {
       );
 
       const data = await response.json();
-      console.log(data);
+
+      const newData = await deleteInviteHandler(token, id);
+
+      let newInvites = [...invites];
+      newInvites = newInvites.filter((i) => {
+        return i._id !== newData.invite._id;
+      });
+      setInvites(newInvites);
 
       // dispatch(updatePriorityProject(data.project));
       // dispatch(updateRecentProject(data.project));
@@ -36,20 +61,7 @@ export default function Invite(props) {
       window.location.reload();
     } else {
       // Call delete invite api
-      console.log(projectId);
-      const response = await fetch("http://localhost:3000/api/invite", {
-        method: "DELETE",
-        cache: "no-cache",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-          "x-authorization-token": token,
-        },
-        body: JSON.stringify({ projectId }),
-      });
-
-      const data = await response.json();
-      console.log(data);
+      const data = await deleteInviteHandler(token, projectId);
 
       let newInvites = [...invites];
       newInvites = newInvites.filter((i) => {
@@ -76,7 +88,7 @@ export default function Invite(props) {
                     className="approval-btn"
                     style={{ backgroundColor: "#32cd32" }}
                     onClick={() => {
-                      inviteHandler("accept", a.projectId);
+                      inviteHandler("accept", a.projectId, a._id);
                     }}
                   >
                     <IoCheckmarkSharp size={20} />

@@ -186,7 +186,7 @@ const Home = (props) => {
                         <p>{project.title[0].toUpperCase()}</p>
                       </div>
                       <div className={styles.cardContent}>
-                        <p className={styles.title}>
+                        <p className={styles.title} title={project.title}>
                           {project.title.toUpperCase()}
                         </p>
                         <p style={{ color: "gray" }}>
